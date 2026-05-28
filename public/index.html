@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skills CLI - 开放式 Agent 技能生态系统</title>
+  <title>Agent 技能目录 - 开放式 Agent 技能生态系统</title>
+  <meta name="description" content="发现并安装 AI Agent 技能。浏览技能排行榜，一键安装，增强您的 Agent 能力。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -52,6 +53,12 @@
       border-bottom: 1px solid var(--card-border);
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
     .logo-link {
       text-decoration: none;
     }
@@ -65,16 +72,9 @@
       letter-spacing: -0.5px;
     }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
     .nav-links {
       display: flex;
       gap: 1.5rem;
-      margin-right: 1rem;
     }
 
     .nav-links a {
@@ -84,7 +84,7 @@
       transition: color 0.3s;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover, .nav-links a.active {
       color: var(--text-main);
     }
 
@@ -104,11 +104,11 @@
       border-color: var(--primary-color);
     }
 
-    /* Hero section matching skills.sh */
+    /* Hero section */
     .hero {
       text-align: center;
       max-width: 800px;
-      margin: 4rem auto 2rem auto;
+      margin: 3rem auto 2rem auto;
       padding: 0 2rem;
     }
 
@@ -118,23 +118,23 @@
       font-size: 8px;
       line-height: 1.1;
       color: var(--accent-color);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       display: flex;
       justify-content: center;
       opacity: 0.85;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       letter-spacing: -0.5px;
     }
 
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text-muted);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .terminal-box {
@@ -175,10 +175,10 @@
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
-      padding: 3rem 2rem;
+      padding: 2.5rem 2rem;
       flex: 1;
       display: grid;
-      grid-template-columns: 260px 1fr;
+      grid-template-columns: 240px 1fr;
       gap: 2.5rem;
     }
 
@@ -205,31 +205,27 @@
       gap: 0.4rem;
     }
 
-    .sidebar-list li {
+    .sidebar-list li a {
+      display: block;
       cursor: pointer;
       padding: 0.5rem 0.8rem;
       border-radius: 8px;
       font-size: 0.95rem;
       color: var(--text-muted);
+      text-decoration: none;
       transition: all 0.2s ease;
     }
 
-    .sidebar-list li:hover {
+    .sidebar-list li a:hover {
       background: rgba(255, 255, 255, 0.03);
       color: var(--text-main);
-    }
-
-    .sidebar-list li.active {
-      background: rgba(59, 130, 246, 0.1);
-      color: var(--accent-color);
-      font-weight: 600;
     }
 
     /* Main Panel Styles */
     .main-panel {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .search-container {
@@ -291,14 +287,14 @@
     .skills-list {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .skill-item {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.25rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -318,20 +314,21 @@
     }
 
     .skill-rank {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text-muted);
-      min-width: 2rem;
+      min-width: 2.5rem;
+      text-align: right;
     }
 
     .skill-info {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.2rem;
     }
 
     .skill-title {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: white;
       text-decoration: none;
@@ -349,20 +346,21 @@
     }
 
     .skill-installs {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--accent-color);
       background: rgba(59, 130, 246, 0.1);
-      padding: 0.2rem 0.6rem;
+      padding: 0.15rem 0.5rem;
       border-radius: 6px;
       font-weight: 600;
       display: inline-block;
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
     }
 
     .skill-right {
       display: flex;
       align-items: center;
       gap: 1rem;
+      flex-shrink: 0;
     }
 
     .copy-btn {
@@ -376,6 +374,7 @@
       cursor: pointer;
       font-family: var(--font-display);
       transition: all 0.2s;
+      white-space: nowrap;
     }
 
     .copy-btn:hover {
@@ -388,6 +387,21 @@
       background: #10b981;
       border-color: #10b981;
       color: white;
+    }
+
+    /* Data source tag */
+    .data-source {
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .data-source a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    .data-source a:hover {
+      text-decoration: underline;
     }
 
     /* Toast Notification */
@@ -446,13 +460,15 @@
 <body>
 
   <header>
-    <a href="index.html" class="logo-link"><div class="logo">Skills CLI</div></a>
-    <div class="header-right">
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><div class="logo">Skills CLI</div></a>
       <nav class="nav-links">
-        <a href="https://github.com/tom613951/skills/blob/master/README.md" target="_blank">官方文档</a>
+        <a href="https://github.com/tom613951/skills/blob/master/README.md" target="_blank">文档</a>
+        <a href="https://skills.sh/topic" target="_blank">分类</a>
+        <a href="https://skills.sh/official" target="_blank">官方技能</a>
       </nav>
-      <a href="https://github.com/tom613951/skills" class="github-link" target="_blank">GitHub</a>
     </div>
+    <a href="https://github.com/tom613951/skills" class="github-link" target="_blank">GitHub</a>
   </header>
 
   <section class="hero">
@@ -481,28 +497,44 @@
   <div class="container">
     <aside class="sidebar">
       <div class="sidebar-section">
-        <h3>技能分类 (Topics)</h3>
-        <ul class="sidebar-list" id="topics-list">
-          <li class="active" data-topic="all">全部主题</li>
-          <li data-topic="react">React</li>
-          <li data-topic="nextjs">Next.js</li>
-          <li data-topic="ui-ux">设计 & UI</li>
-          <li data-topic="mobile">移动端</li>
-          <li data-topic="workflow">Agent 工作流</li>
-          <li data-topic="database">数据库</li>
-          <li data-topic="testing">测试</li>
-          <li data-topic="marketing">市场营销</li>
+        <h3>浏览</h3>
+        <ul class="sidebar-list">
+          <li><a href="https://skills.sh/" target="_blank">全部技能</a></li>
+          <li><a href="https://skills.sh/trending" target="_blank">正在流行</a></li>
+          <li><a href="https://skills.sh/hot" target="_blank">最新热门</a></li>
+          <li><a href="https://skills.sh/official" target="_blank">官方认证</a></li>
+          <li><a href="https://skills.sh/audits" target="_blank">安全审计</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>分类主题</h3>
+        <ul class="sidebar-list">
+          <li><a href="https://skills.sh/topic/react" target="_blank">React</a></li>
+          <li><a href="https://skills.sh/topic/nextjs" target="_blank">Next.js</a></li>
+          <li><a href="https://skills.sh/topic/design" target="_blank">设计 &amp; UI</a></li>
+          <li><a href="https://skills.sh/topic/mobile" target="_blank">移动端</a></li>
+          <li><a href="https://skills.sh/topic/agent-workflows" target="_blank">Agent 工作流</a></li>
+          <li><a href="https://skills.sh/topic/databases" target="_blank">数据库</a></li>
+          <li><a href="https://skills.sh/topic/testing" target="_blank">测试</a></li>
+          <li><a href="https://skills.sh/topic/marketing" target="_blank">市场营销</a></li>
+          <li><a href="https://skills.sh/topic" target="_blank">全部分类 →</a></li>
         </ul>
       </div>
 
       <div class="sidebar-section">
         <h3>支持的 Agent</h3>
-        <ul class="sidebar-list" id="agents-list">
-          <li class="active" data-agent="all">全部 Agent</li>
-          <li data-agent="claude">Claude Code</li>
-          <li data-agent="cursor">Cursor</li>
-          <li data-agent="windsurf">Windsurf</li>
-          <li data-agent="cline">Cline</li>
+        <ul class="sidebar-list">
+          <li><a href="https://skills.sh/agent/claude-code" target="_blank">Claude Code</a></li>
+          <li><a href="https://skills.sh/agent/cursor" target="_blank">Cursor</a></li>
+          <li><a href="https://skills.sh/agent/codex" target="_blank">Codex</a></li>
+          <li><a href="https://skills.sh/agent/github-copilot" target="_blank">GitHub Copilot</a></li>
+          <li><a href="https://skills.sh/agent/windsurf" target="_blank">Windsurf</a></li>
+          <li><a href="https://skills.sh/agent/gemini" target="_blank">Gemini</a></li>
+          <li><a href="https://skills.sh/agent/cline" target="_blank">Cline</a></li>
+          <li><a href="https://skills.sh/agent/amp" target="_blank">AMP</a></li>
+          <li><a href="https://skills.sh/agent/antigravity" target="_blank">Antigravity</a></li>
+          <li><a href="https://skills.sh/agent" target="_blank">全部 Agent →</a></li>
         </ul>
       </div>
     </aside>
@@ -515,11 +547,15 @@
       <div class="tab-bar">
         <button class="tab-btn active" data-tab="all-time">总安装排行</button>
         <button class="tab-btn" data-tab="trending">正在流行 (24h)</button>
-        <button class="tab-btn" data-tab="hot">最热发布</button>
+        <button class="tab-btn" data-tab="hot">最新热门</button>
       </div>
 
       <div class="skills-list" id="skills-list">
         <!-- Rendered dynamically by JS -->
+      </div>
+
+      <div class="data-source">
+        数据来源于 <a href="https://skills.sh" target="_blank">skills.sh</a> 官方排行榜
       </div>
     </main>
   </div>
@@ -527,178 +563,118 @@
   <div class="toast" id="toast">复制成功！已写入剪贴板</div>
 
   <footer>
-    <p>&copy; 2026 Skills CLI 中文目录. Powered by Vercel.</p>
+    <p>&copy; 2026 Skills CLI 中文目录. 数据来源 <a href="https://skills.sh" style="color:var(--accent-color);text-decoration:none;">skills.sh</a>. Powered by Vercel.</p>
   </footer>
 
   <script>
-    // Pre-populated catalog of popular skills from skills.sh
-    const SKILLS_DATA = [
-      {
-        name: "find-skills",
-        author: "vercel-labs/skills",
-        installs: "1.7M",
-        topics: ["workflow"],
-        agents: ["claude", "cursor", "windsurf", "cline"],
-        tab: "all-time"
-      },
-      {
-        name: "frontend-design",
-        author: "anthropics/skills",
-        installs: "471.2K",
-        topics: ["ui-ux", "react"],
-        agents: ["claude", "cursor"],
-        tab: "all-time"
-      },
-      {
-        name: "vercel-react-best-practices",
-        author: "vercel-labs/agent-skills",
-        installs: "433.2K",
-        topics: ["react", "nextjs"],
-        agents: ["claude", "cursor", "windsurf"],
-        tab: "all-time"
-      },
-      {
-        name: "microsoft-foundry",
-        author: "microsoft/azure-skills",
-        installs: "350.0K",
-        topics: ["workflow"],
-        agents: ["claude"],
-        tab: "all-time"
-      },
-      {
-        name: "web-design-guidelines",
-        author: "vercel-labs/agent-skills",
-        installs: "349.7K",
-        topics: ["ui-ux"],
-        agents: ["claude", "cursor"],
-        tab: "all-time"
-      },
-      {
-        name: "azure-ai",
-        author: "microsoft/azure-skills",
-        installs: "348.3K",
-        topics: ["workflow"],
-        agents: ["claude", "cursor", "windsurf"],
-        tab: "all-time"
-      },
-      {
-        name: "remotion-best-practices",
-        author: "remotion-dev/skills",
-        installs: "334.7K",
-        topics: ["react"],
-        agents: ["claude", "cursor"],
-        tab: "trending"
-      },
-      {
-        name: "azure-hosted-copilot-sdk",
-        author: "microsoft/azure-skills",
-        installs: "320.3K",
-        topics: ["workflow"],
-        agents: ["claude"],
-        tab: "trending"
-      },
-      {
-        name: "agent-browser",
-        author: "vercel-labs/agent-browser",
-        installs: "320.0K",
-        topics: ["workflow"],
-        agents: ["claude", "cursor", "cline"],
-        tab: "trending"
-      },
-      {
-        name: "azure-compute",
-        author: "microsoft/azure-skills",
-        installs: "291.1K",
-        topics: ["workflow"],
-        agents: ["claude"],
-        tab: "trending"
-      },
-      {
-        name: "skill-creator",
-        author: "anthropics/skills",
-        installs: "238.3K",
-        topics: ["workflow"],
-        agents: ["claude", "cursor", "windsurf", "cline"],
-        tab: "hot"
-      },
-      {
-        name: "grill-me",
-        author: "mattpocock/skills",
-        installs: "224.1K",
-        topics: ["testing"],
-        agents: ["claude", "cursor"],
-        tab: "hot"
-      },
-      {
-        name: "supabase-postgres-best-practices",
-        author: "supabase/agent-skills",
-        installs: "194.6K",
-        topics: ["database"],
-        agents: ["claude", "cursor", "windsurf"],
-        tab: "hot"
-      },
-      {
-        name: "ui-ux-pro-max",
-        author: "nextlevelbuilder/ui-ux-pro-max-skill",
-        installs: "187.8K",
-        topics: ["ui-ux"],
-        agents: ["claude", "cursor", "cline"],
-        tab: "hot"
-      },
-      {
-        name: "improve-codebase-architecture",
-        author: "mattpocock/skills",
-        installs: "180.1K",
-        topics: ["workflow"],
-        agents: ["claude", "cursor"],
-        tab: "hot"
-      },
-      {
-        name: "github-actions-docs",
-        author: "xixu-me/skills",
-        installs: "175.1K",
-        topics: ["workflow"],
-        agents: ["claude", "cursor", "cline"],
-        tab: "hot"
-      },
-      {
-        name: "readme-i18n",
-        author: "xixu-me/skills",
-        installs: "171.7K",
-        topics: ["workflow"],
-        agents: ["claude", "cursor", "windsurf", "cline"],
-        tab: "hot"
-      },
-      {
-        name: "shadcn",
-        author: "shadcn/ui",
-        installs: "163.4K",
-        topics: ["ui-ux", "react"],
-        agents: ["claude", "cursor", "windsurf"],
-        tab: "all-time"
-      },
-      {
-        name: "seo-audit",
-        author: "coreyhaines31/marketingskills",
-        installs: "122.0K",
-        topics: ["marketing"],
-        agents: ["claude", "cursor"],
-        tab: "hot"
-      },
-      {
-        name: "firebase-basics",
-        author: "firebase/agent-skills",
-        installs: "66.4K",
-        topics: ["database"],
-        agents: ["claude", "cursor"],
-        tab: "hot"
-      }
-    ];
+    // ===== Accurate data from the official skills.sh leaderboard (2026-05-28) =====
+    const SKILLS_DATA = {
+      "all-time": [
+        { rank: 1, name: "find-skills", author: "vercel-labs/skills", installs: "1.7M" },
+        { rank: 2, name: "frontend-design", author: "anthropics/skills", installs: "471.2K" },
+        { rank: 3, name: "vercel-react-best-practices", author: "vercel-labs/agent-skills", installs: "433.2K" },
+        { rank: 4, name: "microsoft-foundry", author: "microsoft/azure-skills", installs: "350.0K" },
+        { rank: 5, name: "web-design-guidelines", author: "vercel-labs/agent-skills", installs: "349.7K" },
+        { rank: 6, name: "azure-ai", author: "microsoft/azure-skills", installs: "348.3K" },
+        { rank: 21, name: "remotion-best-practices", author: "remotion-dev/skills", installs: "334.7K" },
+        { rank: 22, name: "azure-hosted-copilot-sdk", author: "microsoft/azure-skills", installs: "320.3K" },
+        { rank: 23, name: "agent-browser", author: "vercel-labs/agent-browser", installs: "320.0K" },
+        { rank: 24, name: "azure-compute", author: "microsoft/azure-skills", installs: "291.1K" },
+        { rank: 25, name: "azure-cloud-migrate", author: "microsoft/azure-skills", installs: "281.4K" },
+        { rank: 26, name: "skill-creator", author: "anthropics/skills", installs: "238.3K" },
+        { rank: 27, name: "grill-me", author: "mattpocock/skills", installs: "224.1K" },
+        { rank: 28, name: "azure-quotas", author: "microsoft/azure-skills", installs: "218.3K" },
+        { rank: 29, name: "azure-upgrade", author: "microsoft/azure-skills", installs: "210.8K" },
+        { rank: 30, name: "azure-cost-optimization", author: "microsoft/azure-skills", installs: "206.4K" },
+        { rank: 31, name: "supabase-postgres-best-practices", author: "supabase/agent-skills", installs: "194.6K" },
+        { rank: 32, name: "vercel-composition-patterns", author: "vercel-labs/agent-skills", installs: "190.5K" },
+        { rank: 33, name: "ui-ux-pro-max", author: "nextlevelbuilder/ui-ux-pro-max-skill", installs: "187.8K" },
+        { rank: 34, name: "brainstorming", author: "obra/superpowers", installs: "187.1K" },
+        { rank: 35, name: "azure-enterprise-infra-planner", author: "microsoft/azure-skills", installs: "184.8K" },
+        { rank: 36, name: "caveman", author: "juliusbrussee/caveman", installs: "184.6K" },
+        { rank: 37, name: "sleek-design-mobile-apps", author: "sleekdotdesign/agent-skills", installs: "182.2K" },
+        { rank: 38, name: "improve-codebase-architecture", author: "mattpocock/skills", installs: "180.1K" },
+        { rank: 39, name: "azure-kubernetes", author: "microsoft/azure-skills", installs: "177.7K" },
+        { rank: 40, name: "lark-doc", author: "larksuite/cli", installs: "175.1K" },
+        { rank: 41, name: "github-actions-docs", author: "xixu-me/skills", installs: "175.1K" },
+        { rank: 42, name: "lark-base", author: "larksuite/cli", installs: "174.7K" },
+        { rank: 60, name: "openclaw-secure-linux-cloud", author: "xixu-me/skills", installs: "172.5K" },
+        { rank: 65, name: "tdd", author: "mattpocock/skills", installs: "171.9K" },
+        { rank: 66, name: "readme-i18n", author: "xixu-me/skills", installs: "171.7K" },
+        { rank: 67, name: "use-my-browser", author: "xixu-me/skills", installs: "170.3K" },
+        { rank: 68, name: "soultrace", author: "soultrace-ai/soultrace-skill", installs: "169.8K" },
+        { rank: 73, name: "shadcn", author: "shadcn/ui", installs: "163.4K" },
+        { rank: 75, name: "to-prd", author: "mattpocock/skills", installs: "153.4K" },
+        { rank: 76, name: "simple", author: "roin-orca/skills", installs: "153.4K" },
+        { rank: 92, name: "write-a-skill", author: "mattpocock/skills", installs: "142.9K" },
+        { rank: 100, name: "caveman", author: "mattpocock/skills", installs: "137.4K" },
+        { rank: 101, name: "impeccable", author: "pbakaus/impeccable", installs: "134.1K" },
+        { rank: 103, name: "vercel-react-native-skills", author: "vercel-labs/agent-skills", installs: "128.3K" },
+        { rank: 129, name: "pptx", author: "anthropics/skills", installs: "123.6K" },
+        { rank: 130, name: "seo-audit", author: "coreyhaines31/marketingskills", installs: "122.0K" },
+        { rank: 132, name: "pdf", author: "anthropics/skills", installs: "119.6K" },
+        { rank: 136, name: "extract-design-system", author: "arvindrk/extract-design-system", installs: "113.2K" },
+        { rank: 151, name: "next-best-practices", author: "vercel-labs/next-skills", installs: "95.5K" },
+        { rank: 155, name: "supabase", author: "supabase/agent-skills", installs: "92.3K" },
+        { rank: 211, name: "firebase-basics", author: "firebase/agent-skills", installs: "66.4K" },
+        { rank: 220, name: "mcp-builder", author: "anthropics/skills", installs: "63.7K" },
+        { rank: 223, name: "canvas-design", author: "anthropics/skills", installs: "62.8K" },
+        { rank: 235, name: "deploy-to-vercel", author: "vercel-labs/agent-skills", installs: "59.5K" },
+      ],
+      "trending": [
+        { rank: 1, name: "ai-image-generation", author: "skills-shell/skills", installs: "21.9K" },
+        { rank: 6, name: "find-skills", author: "vercel-labs/skills", installs: "18.0K" },
+        { rank: 7, name: "soultrace", author: "soultrace-ai/soultrace-skill", installs: "14.8K" },
+        { rank: 8, name: "grill-me", author: "mattpocock/skills", installs: "6.7K" },
+        { rank: 9, name: "grill-with-docs", author: "mattpocock/skills", installs: "6.2K" },
+        { rank: 10, name: "ai-image-generation", author: "agentspace-so/runcomfy-agent-skills", installs: "6.1K" },
+        { rank: 39, name: "improve-codebase-architecture", author: "mattpocock/skills", installs: "5.7K" },
+        { rank: 40, name: "seedance-v2", author: "runcomfy-com/skills", installs: "5.6K" },
+        { rank: 41, name: "handoff", author: "mattpocock/skills", installs: "5.5K" },
+        { rank: 42, name: "gpt-image-2", author: "doany-ai/skills", installs: "5.5K" },
+        { rank: 43, name: "gpt-image-edit", author: "runcomfy-com/skills", installs: "5.5K" },
+        { rank: 44, name: "lipsync", author: "doany-ai/skills", installs: "5.5K" },
+        { rank: 48, name: "gpt-image-2", author: "agentspace-so/agent-skills", installs: "5.5K" },
+        { rank: 49, name: "ai-video-generation", author: "runcomfy-com/skills", installs: "5.5K" },
+        { rank: 103, name: "tdd", author: "mattpocock/skills", installs: "5.3K" },
+        { rank: 104, name: "diagnose", author: "mattpocock/skills", installs: "5.2K" },
+        { rank: 105, name: "to-prd", author: "mattpocock/skills", installs: "5.2K" },
+        { rank: 106, name: "frontend-design", author: "anthropics/skills", installs: "5.2K" },
+        { rank: 107, name: "setup-matt-pocock-skills", author: "mattpocock/skills", installs: "5.0K" },
+        { rank: 110, name: "agent-browser", author: "vercel-labs/agent-browser", installs: "4.9K" },
+        { rank: 115, name: "impeccable", author: "pbakaus/impeccable", installs: "4.2K" },
+        { rank: 116, name: "agent-browser", author: "skills-shell/skills", installs: "4.1K" },
+        { rank: 117, name: "design-taste-frontend", author: "leonxlnx/taste-skill", installs: "3.8K" },
+        { rank: 118, name: "caveman", author: "juliusbrussee/caveman", installs: "3.5K" },
+        { rank: 119, name: "microsoft-foundry", author: "microsoft/azure-skills", installs: "2.9K" },
+        { rank: 160, name: "vercel-react-best-practices", author: "vercel-labs/agent-skills", installs: "2.6K" },
+        { rank: 191, name: "skill-creator", author: "anthropics/skills", installs: "2.4K" },
+        { rank: 194, name: "web-design-guidelines", author: "vercel-labs/agent-skills", installs: "2.3K" },
+        { rank: 196, name: "supabase-postgres-best-practices", author: "supabase/agent-skills", installs: "2.1K" },
+        { rank: 197, name: "remotion-best-practices", author: "remotion-dev/skills", installs: "1.9K" },
+      ],
+      "hot": [
+        { rank: 1, name: "agent-pulse", author: "jane-o-o-o-o/agent-pulse-skills", installs: "+180" },
+        { rank: 2, name: "design-an-interface", author: "mattpocock/skills", installs: "+34" },
+        { rank: 3, name: "obsidian-vault", author: "mattpocock/skills", installs: "+33" },
+        { rank: 4, name: "nia", author: "nozomio-labs/nia-skill", installs: "+33" },
+        { rank: 5, name: "opentui", author: "msmps/opentui-skill", installs: "+32" },
+        { rank: 6, name: "qa", author: "mattpocock/skills", installs: "+32" },
+        { rank: 19, name: "emblem-ai", author: "emblemcompany/agent-skills", installs: "+15" },
+        { rank: 29, name: "graphite", author: "withgraphite/agent-skills", installs: "+11" },
+        { rank: 30, name: "google-agents-cli-adk-code", author: "google/agents-cli", installs: "+4" },
+        { rank: 31, name: "frontend-design", author: "bytedance/deer-flow", installs: "+4" },
+        { rank: 32, name: "langfuse", author: "langfuse/skills", installs: "+4" },
+        { rank: 43, name: "gh-fix-ci", author: "openai/skills", installs: "+2" },
+        { rank: 44, name: "ast-grep", author: "ast-grep/agent-skill", installs: "+2" },
+        { rank: 46, name: "longbridge-dca", author: "longbridge/skills", installs: "+2" },
+        { rank: 51, name: "prd-to-plan", author: "mattpocock/skills", installs: "+2" },
+        { rank: 55, name: "write-a-prd", author: "mattpocock/skills", installs: "+2" },
+      ],
+    };
 
     // State Variables
     let currentTab = "all-time";
-    let currentTopic = "all";
-    let currentAgent = "all";
     let searchQuery = "";
 
     // DOM Elements
@@ -719,26 +695,6 @@
       });
     });
 
-    // Event Listeners for topics
-    document.querySelectorAll("#topics-list li").forEach(li => {
-      li.addEventListener("click", () => {
-        document.querySelectorAll("#topics-list li").forEach(l => l.classList.remove("active"));
-        li.classList.add("active");
-        currentTopic = li.dataset.topic;
-        renderSkills();
-      });
-    });
-
-    // Event Listeners for agents
-    document.querySelectorAll("#agents-list li").forEach(li => {
-      li.addEventListener("click", () => {
-        document.querySelectorAll("#agents-list li").forEach(l => l.classList.remove("active"));
-        li.classList.add("active");
-        currentAgent = li.dataset.agent;
-        renderSkills();
-      });
-    });
-
     // Search input handler
     searchInputEl.addEventListener("input", (e) => {
       searchQuery = e.target.value.toLowerCase().trim();
@@ -747,24 +703,15 @@
 
     // Main render function
     function renderSkills() {
+      const data = SKILLS_DATA[currentTab] || [];
+
       // Filter list
-      const filtered = SKILLS_DATA.filter(skill => {
-        // Tab filter
-        if (currentTab !== "all-time" && skill.tab !== currentTab) return false;
-        
-        // Topic filter
-        if (currentTopic !== "all" && !skill.topics.includes(currentTopic)) return false;
-
-        // Agent filter
-        if (currentAgent !== "all" && !skill.agents.includes(currentAgent)) return false;
-
-        // Search query filter
+      const filtered = data.filter(skill => {
         if (searchQuery) {
           const matchName = skill.name.toLowerCase().includes(searchQuery);
           const matchAuthor = skill.author.toLowerCase().includes(searchQuery);
           return matchName || matchAuthor;
         }
-
         return true;
       });
 
@@ -781,23 +728,27 @@
       }
 
       // Render items
-      filtered.forEach((skill, index) => {
+      filtered.forEach((skill) => {
         const itemEl = document.createElement("div");
         itemEl.className = "skill-item";
         
+        const installLabel = currentTab === "hot" ? skill.installs : `💾 ${skill.installs} 安装量`;
+        const skillUrl = `https://skills.sh/${skill.author}/${skill.name}`;
+        const copySource = `${skill.author}`;
+        
         itemEl.innerHTML = `
           <div class="skill-left">
-            <span class="skill-rank">#${index + 1}</span>
+            <span class="skill-rank">#${skill.rank}</span>
             <div class="skill-info">
-              <a href="https://github.com/${skill.author}" target="_blank" class="skill-title">${skill.name}</a>
-              <span class="skill-author">源: ${skill.author}</span>
+              <a href="${skillUrl}" target="_blank" class="skill-title">${skill.name}</a>
+              <span class="skill-author">${skill.author}</span>
               <div>
-                <span class="skill-installs">💾 ${skill.installs} 安装量</span>
+                <span class="skill-installs">${installLabel}</span>
               </div>
             </div>
           </div>
           <div class="skill-right">
-            <button class="copy-btn" onclick="copyCommand('${skill.author}/${skill.name}', this)">
+            <button class="copy-btn" onclick="copyCommand('${copySource}', this)">
               复制命令
             </button>
           </div>
