@@ -48,6 +48,16 @@
       align-items: center;
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo-link {
+      text-decoration: none;
+    }
+
     .logo {
       font-size: 1.5rem;
       font-weight: 800;
@@ -55,6 +65,22 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-main);
     }
 
     .github-link {
@@ -331,7 +357,13 @@
 <body>
 
   <header>
-    <div class="logo">Skills CLI</div>
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><div class="logo">Skills CLI</div></a>
+      <nav class="nav-links">
+        <a href="index.html" class="active">首页</a>
+        <a href="skills.html">技能目录</a>
+      </nav>
+    </div>
     <a href="https://github.com/tom613951/skills" class="github-link" target="_blank">GitHub</a>
   </header>
 
@@ -343,6 +375,7 @@
       
       <div class="cta-container">
         <a href="#commands" class="btn btn-primary">常用命令</a>
+        <a href="skills.html" class="btn btn-secondary">浏览技能目录</a>
         <a href="https://github.com/tom613951/skills" class="btn btn-secondary" target="_blank">查看源码</a>
       </div>
 

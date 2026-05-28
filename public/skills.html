@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent 技能目录 - Skills CLI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary-color: #3b82f6;
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --accent-color: #60a5fa;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --code-bg: #1e293b;
+      --font-display: 'Outfit', 'Noto Sans SC', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-display);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(29, 78, 216, 0.1) 0%, transparent 40%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo-link {
+      text-decoration: none;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-main);
+    }
+
+    .github-link {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--card-border);
+      border-radius: 9999px;
+      background-color: rgba(255, 255, 255, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .github-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2.5rem;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .sidebar-section h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .sidebar-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .sidebar-list li {
+      cursor: pointer;
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-list li:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+    }
+
+    .sidebar-list li.active {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    /* Main Panel Styles */
+    .main-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 1.05rem;
+      font-family: var(--font-display);
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.75rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: var(--font-display);
+      cursor: pointer;
+      position: relative;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.3s;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      color: var(--text-main);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -0.9rem;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .skill-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .skill-item:hover {
+      border-color: rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .skill-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      max-width: 70%;
+    }
+
+    .skill-rank {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 2rem;
+    }
+
+    .skill-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .skill-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .skill-title:hover {
+      color: var(--accent-color);
+    }
+
+    .skill-author {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    .skill-installs {
+      font-size: 0.875rem;
+      color: var(--accent-color);
+      background: rgba(59, 130, 246, 0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 0.25rem;
+    }
+
+    .skill-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-display);
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary-gradient);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+
+    .copy-btn.copied {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10b981;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none; /* Hide sidebar on mobile for simplicity */
+      }
+      .skill-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .skill-left {
+        max-width: 100%;
+      }
+      .skill-right {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <a href="index.html" class="logo-link"><div class="logo">Skills CLI</div></a>
+      <nav class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="skills.html" class="active">技能目录</a>
+      </nav>
+    </div>
+    <a href="https://github.com/tom613951/skills" class="github-link" target="_blank">GitHub</a>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h3>技能分类 (Topics)</h3>
+        <ul class="sidebar-list" id="topics-list">
+          <li class="active" data-topic="all">全部主题</li>
+          <li data-topic="react">React</li>
+          <li data-topic="nextjs">Next.js</li>
+          <li data-topic="ui-ux">设计 & UI</li>
+          <li data-topic="mobile">移动端</li>
+          <li data-topic="workflow">Agent 工作流</li>
+          <li data-topic="database">数据库</li>
+          <li data-topic="testing">测试</li>
+          <li data-topic="marketing">市场营销</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>推荐 Agent</h3>
+        <ul class="sidebar-list" id="agents-list">
+          <li class="active" data-agent="all">全部 Agent</li>
+          <li data-agent="claude">Claude Code</li>
+          <li data-agent="cursor">Cursor</li>
+          <li data-agent="windsurf">Windsurf</li>
+          <li data-agent="cline">Cline</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <div class="search-container">
+        <input type="text" class="search-input" id="search-input" placeholder="搜索技能名称、作者或指令...">
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="all-time">总安装排行</button>
+        <button class="tab-btn" data-tab="trending">正在流行 (24h)</button>
+        <button class="tab-btn" data-tab="hot">最热发布</button>
+      </div>
+
+      <div class="skills-list" id="skills-list">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">复制成功！已写入剪贴板</div>
+
+  <footer>
+    <p>&copy; 2026 Skills CLI 中文目录. Powered by Vercel.</p>
+  </footer>
+
+  <script>
+    // Pre-populated catalog of popular skills from skills.sh
+    const SKILLS_DATA = [
+      {
+        name: "find-skills",
+        author: "vercel-labs/skills",
+        installs: "1.7M",
+        topics: ["workflow"],
+        agents: ["claude", "cursor", "windsurf", "cline"],
+        tab: "all-time"
+      },
+      {
+        name: "frontend-design",
+        author: "anthropics/skills",
+        installs: "471.2K",
+        topics: ["ui-ux", "react"],
+        agents: ["claude", "cursor"],
+        tab: "all-time"
+      },
+      {
+        name: "vercel-react-best-practices",
+        author: "vercel-labs/agent-skills",
+        installs: "433.2K",
+        topics: ["react", "nextjs"],
+        agents: ["claude", "cursor", "windsurf"],
+        tab: "all-time"
+      },
+      {
+        name: "microsoft-foundry",
+        author: "microsoft/azure-skills",
+        installs: "350.0K",
+        topics: ["workflow"],
+        agents: ["claude"],
+        tab: "all-time"
+      },
+      {
+        name: "web-design-guidelines",
+        author: "vercel-labs/agent-skills",
+        installs: "349.7K",
+        topics: ["ui-ux"],
+        agents: ["claude", "cursor"],
+        tab: "all-time"
+      },
+      {
+        name: "azure-ai",
+        author: "microsoft/azure-skills",
+        installs: "348.3K",
+        topics: ["workflow"],
+        agents: ["claude", "cursor", "windsurf"],
+        tab: "all-time"
+      },
+      {
+        name: "remotion-best-practices",
+        author: "remotion-dev/skills",
+        installs: "334.7K",
+        topics: ["react"],
+        agents: ["claude", "cursor"],
+        tab: "trending"
+      },
+      {
+        name: "azure-hosted-copilot-sdk",
+        author: "microsoft/azure-skills",
+        installs: "320.3K",
+        topics: ["workflow"],
+        agents: ["claude"],
+        tab: "trending"
+      },
+      {
+        name: "agent-browser",
+        author: "vercel-labs/agent-browser",
+        installs: "320.0K",
+        topics: ["workflow"],
+        agents: ["claude", "cursor", "cline"],
+        tab: "trending"
+      },
+      {
+        name: "azure-compute",
+        author: "microsoft/azure-skills",
+        installs: "291.1K",
+        topics: ["workflow"],
+        agents: ["claude"],
+        tab: "trending"
+      },
+      {
+        name: "skill-creator",
+        author: "anthropics/skills",
+        installs: "238.3K",
+        topics: ["workflow"],
+        agents: ["claude", "cursor", "windsurf", "cline"],
+        tab: "hot"
+      },
+      {
+        name: "grill-me",
+        author: "mattpocock/skills",
+        installs: "224.1K",
+        topics: ["testing"],
+        agents: ["claude", "cursor"],
+        tab: "hot"
+      },
+      {
+        name: "supabase-postgres-best-practices",
+        author: "supabase/agent-skills",
+        installs: "194.6K",
+        topics: ["database"],
+        agents: ["claude", "cursor", "windsurf"],
+        tab: "hot"
+      },
+      {
+        name: "ui-ux-pro-max",
+        author: "nextlevelbuilder/ui-ux-pro-max-skill",
+        installs: "187.8K",
+        topics: ["ui-ux"],
+        agents: ["claude", "cursor", "cline"],
+        tab: "hot"
+      },
+      {
+        name: "improve-codebase-architecture",
+        author: "mattpocock/skills",
+        installs: "180.1K",
+        topics: ["workflow"],
+        agents: ["claude", "cursor"],
+        tab: "hot"
+      },
+      {
+        name: "github-actions-docs",
+        author: "xixu-me/skills",
+        installs: "175.1K",
+        topics: ["workflow"],
+        agents: ["claude", "cursor", "cline"],
+        tab: "hot"
+      },
+      {
+        name: "readme-i18n",
+        author: "xixu-me/skills",
+        installs: "171.7K",
+        topics: ["workflow"],
+        agents: ["claude", "cursor", "windsurf", "cline"],
+        tab: "hot"
+      },
+      {
+        name: "shadcn",
+        author: "shadcn/ui",
+        installs: "163.4K",
+        topics: ["ui-ux", "react"],
+        agents: ["claude", "cursor", "windsurf"],
+        tab: "all-time"
+      },
+      {
+        name: "seo-audit",
+        author: "coreyhaines31/marketingskills",
+        installs: "122.0K",
+        topics: ["marketing"],
+        agents: ["claude", "cursor"],
+        tab: "hot"
+      },
+      {
+        name: "firebase-basics",
+        author: "firebase/agent-skills",
+        installs: "66.4K",
+        topics: ["database"],
+        agents: ["claude", "cursor"],
+        tab: "hot"
+      }
+    ];
+
+    // State Variables
+    let currentTab = "all-time";
+    let currentTopic = "all";
+    let currentAgent = "all";
+    let searchQuery = "";
+
+    // DOM Elements
+    const skillsListEl = document.getElementById("skills-list");
+    const searchInputEl = document.getElementById("search-input");
+    const toastEl = document.getElementById("toast");
+
+    // Initialize Render
+    renderSkills();
+
+    // Event Listeners for tabs
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentTab = btn.dataset.tab;
+        renderSkills();
+      });
+    });
+
+    // Event Listeners for topics
+    document.querySelectorAll("#topics-list li").forEach(li => {
+      li.addEventListener("click", () => {
+        document.querySelectorAll("#topics-list li").forEach(l => l.classList.remove("active"));
+        li.classList.add("active");
+        currentTopic = li.dataset.topic;
+        renderSkills();
+      });
+    });
+
+    // Event Listeners for agents
+    document.querySelectorAll("#agents-list li").forEach(li => {
+      li.addEventListener("click", () => {
+        document.querySelectorAll("#agents-list li").forEach(l => l.classList.remove("active"));
+        li.classList.add("active");
+        currentAgent = li.dataset.agent;
+        renderSkills();
+      });
+    });
+
+    // Search input handler
+    searchInputEl.addEventListener("input", (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderSkills();
+    });
+
+    // Main render function
+    function renderSkills() {
+      // Filter list
+      const filtered = SKILLS_DATA.filter(skill => {
+        // Tab filter
+        if (currentTab !== "all-time" && skill.tab !== currentTab) return false;
+        
+        // Topic filter
+        if (currentTopic !== "all" && !skill.topics.includes(currentTopic)) return false;
+
+        // Agent filter
+        if (currentAgent !== "all" && !skill.agents.includes(currentAgent)) return false;
+
+        // Search query filter
+        if (searchQuery) {
+          const matchName = skill.name.toLowerCase().includes(searchQuery);
+          const matchAuthor = skill.author.toLowerCase().includes(searchQuery);
+          return matchName || matchAuthor;
+        }
+
+        return true;
+      });
+
+      // Clear previous
+      skillsListEl.innerHTML = "";
+
+      if (filtered.length === 0) {
+        skillsListEl.innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+            未找到符合条件的技能
+          </div>
+        `;
+        return;
+      }
+
+      // Render items
+      filtered.forEach((skill, index) => {
+        const itemEl = document.createElement("div");
+        itemEl.className = "skill-item";
+        
+        itemEl.innerHTML = `
+          <div class="skill-left">
+            <span class="skill-rank">#${index + 1}</span>
+            <div class="skill-info">
+              <a href="https://github.com/${skill.author}" target="_blank" class="skill-title">${skill.name}</a>
+              <span class="skill-author">源: ${skill.author}</span>
+              <div>
+                <span class="skill-installs">💾 ${skill.installs} 安装量</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-right">
+            <button class="copy-btn" onclick="copyCommand('${skill.author}/${skill.name}', this)">
+              复制命令
+            </button>
+          </div>
+        `;
+        skillsListEl.appendChild(itemEl);
+      });
+    }
+
+    // Copy command handler
+    window.copyCommand = function(sourcePath, btn) {
+      const command = `npx skills add ${sourcePath}`;
+      navigator.clipboard.writeText(command).then(() => {
+        // Change button state
+        btn.innerText = "已复制";
+        btn.classList.add("copied");
+        
+        // Show toast
+        toastEl.classList.add("show");
+        
+        setTimeout(() => {
+          btn.innerText = "复制命令";
+          btn.classList.remove("copied");
+          toastEl.classList.remove("show");
+        }, 2000);
+      });
+    };
+  </script>
+</body>
+</html>
