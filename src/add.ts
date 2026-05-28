@@ -159,7 +159,7 @@ function buildSecurityLines(
 
   // Footer link
   lines.push('');
-  lines.push(`${pc.dim('Details:')} ${pc.dim(`https://skills.sh/${source}`)}`);
+  lines.push(`${pc.dim('Details:')} ${pc.dim(`https://lively-pythagoras.vercel.app/`)}`);
 
   return lines;
 }

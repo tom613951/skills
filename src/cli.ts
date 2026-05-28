@@ -94,7 +94,7 @@ function showBanner(): void {
   console.log();
   console.log(`${DIM}尝试：${RESET} npx skills add vercel-labs/agent-skills`);
   console.log();
-  console.log(`发现更多技能请访问 ${TEXT}https://skills.sh/${RESET}`);
+  console.log(`发现更多技能请访问 ${TEXT}https://lively-pythagoras.vercel.app/${RESET}`);
   console.log();
 }
 
@@ -175,7 +175,7 @@ ${BOLD}示例：${RESET}
   ${DIM}$${RESET} skills experimental_sync              ${DIM}# 从 node_modules 同步${RESET}
   ${DIM}$${RESET} skills experimental_sync -y           ${DIM}# 同步且不进行提示${RESET}
 
-发现更多技能请访问 ${TEXT}https://skills.sh/${RESET}
+发现更多技能请访问 ${TEXT}https://lively-pythagoras.vercel.app/${RESET}
 `);
 }
 
@@ -206,7 +206,7 @@ ${BOLD}示例：${RESET}
   ${DIM}$${RESET} skills remove --all                      ${DIM}# 移除所有技能${RESET}
   ${DIM}$${RESET} skills remove --skill '*' -a cursor      ${DIM}# 移除 cursor 中的所有技能${RESET}
 
-发现更多技能请访问 ${TEXT}https://skills.sh/${RESET}
+发现更多技能请访问 ${TEXT}https://lively-pythagoras.vercel.app/${RESET}
 `);
 }
 
@@ -267,7 +267,7 @@ description: 简要描述该技能的作用
     `  ${DIM}URL:${RESET}     托管该文件，然后执行 ${TEXT}npx skills add https://example.com/${displayPath}${RESET}`
   );
   console.log();
-  console.log(`访问 ${TEXT}https://skills.sh/${RESET} 浏览现有技能以获取灵感`);
+  console.log(`访问 ${TEXT}https://lively-pythagoras.vercel.app/${RESET} 浏览现有技能以获取灵感`);
   console.log();
 }
 

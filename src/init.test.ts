@@ -34,7 +34,7 @@ describe('init command', () => {
         GitHub:  推送到仓库，然后执行 npx skills add <所有者>/<仓库>
         URL:     托管该文件，然后执行 npx skills add https://example.com/my-test-skill/SKILL.md
 
-      访问 https://skills.sh/ 浏览现有技能以获取灵感
+      访问 https://lively-pythagoras.vercel.app/ 浏览现有技能以获取灵感
 
       "
     `);

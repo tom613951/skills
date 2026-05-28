@@ -300,7 +300,7 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
       console.log(
         `${TEXT}${pkg}@${skill.name}${RESET}${installs ? ` ${CYAN}${installs}${RESET}` : ''}`
       );
-      console.log(`${DIM}└ https://skills.sh/${skill.slug}${RESET}`);
+      console.log(`${DIM}└ https://lively-pythagoras.vercel.app/${RESET}`);
       console.log();
     }
     return;
@@ -347,10 +347,12 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
   const info = getOwnerRepoFromString(pkg);
   if (info && (await isRepoPublic(info.owner, info.repo))) {
     console.log(
-      `${DIM}在以下网址查看此技能：${RESET} ${TEXT}https://skills.sh/${selected.slug}${RESET}`
+      `${DIM}在以下网址查看此技能：${RESET} ${TEXT}https://lively-pythagoras.vercel.app/${RESET}`
     );
   } else {
-    console.log(`${DIM}发现更多技能请访问：${RESET} ${TEXT}https://skills.sh${RESET}`);
+    console.log(
+      `${DIM}发现更多技能请访问：${RESET} ${TEXT}https://lively-pythagoras.vercel.app/${RESET}`
+    );
   }
 
   console.log();

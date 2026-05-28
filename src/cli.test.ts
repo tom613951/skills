@@ -50,7 +50,7 @@ describe('skills CLI', () => {
       expect(output).toContain('npx skills add');
       expect(output).toContain('npx skills update');
       expect(output).toContain('npx skills init');
-      expect(output).toContain('skills.sh');
+      expect(output).toContain('lively-pythagoras.vercel.app');
     });
   });
 

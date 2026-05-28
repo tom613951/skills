@@ -6,7 +6,7 @@
 支持 **OpenCode**、**Claude Code**、**Codex**、**Cursor** 以及[其他 52 个 Agent](#supported-agents)。
 <!-- agent-list:end -->
 
-[![skills.sh](https://skills.sh/b/vercel-labs/skills)](https://skills.sh/vercel-labs/skills)
+[![skills.sh](https://skills.sh/b/vercel-labs/skills)](https://lively-pythagoras.vercel.app)
 
 ## 安装技能
 
@@ -218,7 +218,7 @@ Agent 技能是可重用的指令集，用于扩展您的编码 Agent 的能力�
 - 按照团队的规范创建 PR
 - 与外部工具集成 (Linear、Notion 等)
 
-在 **[skills.sh](https://skills.sh)** 发现更多技能。
+在 **[lively-pythagoras.vercel.app](https://lively-pythagoras.vercel.app)** 发现更多技能。
 
 ## 支持的 Agent
 
@@ -454,7 +454,7 @@ INSTALL_INTERNAL_SKILLS=1 npx skills add vercel-labs/agent-skills --list
 ## 相关链接
 
 - [Agent 技能规范](https://agentskills.io)
-- [技能目录](https://skills.sh)
+- [技能目录](https://lively-pythagoras.vercel.app)
 - [Amp 技能文档](https://ampcode.com/manual#agent-skills)
 - [Antigravity 技能文档](https://antigravity.google/docs/skills)
 - [Factory AI / Droid 技能文档](https://docs.factory.ai/cli/configuration/skills)
