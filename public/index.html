@@ -171,6 +171,29 @@
     .terminal-body span.comment { color: #64748b; }
     .terminal-body span.cmd { color: #38bdf8; }
 
+    /* Page Header */
+    .page-header {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f3f4f6 0%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .page-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
     .container {
       max-width: 1200px;
       width: 100%;
@@ -214,11 +237,20 @@
       color: var(--text-muted);
       text-decoration: none;
       transition: all 0.2s ease;
+      border-left: 3px solid transparent;
     }
 
     .sidebar-list li a:hover {
       background: rgba(255, 255, 255, 0.03);
       color: var(--text-main);
+    }
+
+    .sidebar-list li a.active {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--text-main);
+      border-left: 3px solid var(--primary-color);
+      font-weight: 600;
+      padding-left: calc(0.8rem - 3px);
     }
 
     /* Main Panel Styles */
@@ -257,7 +289,7 @@
       padding-bottom: 0.75rem;
     }
 
-    .tab-btn {
+    .tab-bar .tab-btn {
       background: none;
       border: none;
       color: var(--text-muted);
@@ -268,13 +300,15 @@
       position: relative;
       padding: 0.25rem 0.5rem;
       transition: color 0.3s;
+      text-decoration: none;
+      display: inline-block;
     }
 
-    .tab-btn:hover, .tab-btn.active {
+    .tab-bar .tab-btn:hover, .tab-bar .tab-btn.active {
       color: var(--text-main);
     }
 
-    .tab-btn.active::after {
+    .tab-bar .tab-btn.active::after {
       content: '';
       position: absolute;
       bottom: -0.9rem;
@@ -345,6 +379,11 @@
       font-family: monospace;
     }
 
+    .skill-author a:hover {
+      color: var(--accent-color) !important;
+      text-decoration: underline;
+    }
+
     .skill-installs {
       font-size: 0.85rem;
       color: var(--accent-color);
@@ -387,6 +426,60 @@
       background: #10b981;
       border-color: #10b981;
       color: white;
+    }
+
+    /* Skeleton Loading CSS */
+    @keyframes skeleton-pulse {
+      0% { background-color: rgba(255, 255, 255, 0.03); }
+      50% { background-color: rgba(255, 255, 255, 0.08); }
+      100% { background-color: rgba(255, 255, 255, 0.03); }
+    }
+    .skeleton-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 90px;
+      margin-bottom: 0.75rem;
+    }
+    .skeleton-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      width: 60%;
+    }
+    .skeleton-rank {
+      width: 30px;
+      height: 24px;
+      border-radius: 4px;
+      animation: skeleton-pulse 1.5s infinite ease-in-out;
+    }
+    .skeleton-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 80%;
+    }
+    .skeleton-title {
+      width: 60%;
+      height: 18px;
+      border-radius: 4px;
+      animation: skeleton-pulse 1.5s infinite ease-in-out;
+    }
+    .skeleton-text {
+      width: 40%;
+      height: 12px;
+      border-radius: 4px;
+      animation: skeleton-pulse 1.5s infinite ease-in-out;
+    }
+    .skeleton-right {
+      width: 80px;
+      height: 35px;
+      border-radius: 8px;
+      animation: skeleton-pulse 1.5s infinite ease-in-out;
     }
 
     /* Data source tag */
@@ -461,11 +554,11 @@
 
   <header>
     <div class="header-left">
-      <a href="index.html" class="logo-link"><div class="logo">Skills CLI</div></a>
+      <a href="/" class="logo-link"><div class="logo">Skills CLI</div></a>
       <nav class="nav-links">
         <a href="https://github.com/tom613951/skills/blob/master/README.md" target="_blank">文档</a>
-        <a href="https://skills.sh/topic" target="_blank">分类</a>
-        <a href="https://skills.sh/official" target="_blank">官方技能</a>
+        <a href="/topic/react">分类</a>
+        <a href="/official">官方技能</a>
       </nav>
     </div>
     <a href="https://github.com/tom613951/skills" class="github-link" target="_blank">GitHub</a>
@@ -499,55 +592,63 @@
       <div class="sidebar-section">
         <h3>浏览</h3>
         <ul class="sidebar-list">
-          <li><a href="https://skills.sh/" target="_blank">全部技能</a></li>
-          <li><a href="https://skills.sh/trending" target="_blank">正在流行</a></li>
-          <li><a href="https://skills.sh/hot" target="_blank">最新热门</a></li>
-          <li><a href="https://skills.sh/official" target="_blank">官方认证</a></li>
-          <li><a href="https://skills.sh/audits" target="_blank">安全审计</a></li>
+          <li><a href="/">全部技能</a></li>
+          <li><a href="/trending">正在流行</a></li>
+          <li><a href="/hot">最新热门</a></li>
+          <li><a href="/official">官方认证</a></li>
+          <li><a href="/audits">安全审计</a></li>
         </ul>
       </div>
 
       <div class="sidebar-section">
         <h3>分类主题</h3>
         <ul class="sidebar-list">
-          <li><a href="https://skills.sh/topic/react" target="_blank">React</a></li>
-          <li><a href="https://skills.sh/topic/nextjs" target="_blank">Next.js</a></li>
-          <li><a href="https://skills.sh/topic/design" target="_blank">设计 &amp; UI</a></li>
-          <li><a href="https://skills.sh/topic/mobile" target="_blank">移动端</a></li>
-          <li><a href="https://skills.sh/topic/agent-workflows" target="_blank">Agent 工作流</a></li>
-          <li><a href="https://skills.sh/topic/databases" target="_blank">数据库</a></li>
-          <li><a href="https://skills.sh/topic/testing" target="_blank">测试</a></li>
-          <li><a href="https://skills.sh/topic/marketing" target="_blank">市场营销</a></li>
-          <li><a href="https://skills.sh/topic" target="_blank">全部分类 →</a></li>
+          <li><a href="/topic/react">React</a></li>
+          <li><a href="/topic/nextjs">Next.js</a></li>
+          <li><a href="/topic/design">设计 &amp; UI</a></li>
+          <li><a href="/topic/mobile">移动端</a></li>
+          <li><a href="/topic/agent-workflows">Agent 工作流</a></li>
+          <li><a href="/topic/databases">数据库</a></li>
+          <li><a href="/topic/testing">测试</a></li>
+          <li><a href="/topic/marketing">市场营销</a></li>
+          <li><a href="/topic/react">全部分类 →</a></li>
         </ul>
       </div>
 
       <div class="sidebar-section">
         <h3>支持的 Agent</h3>
         <ul class="sidebar-list">
-          <li><a href="https://skills.sh/agent/claude-code" target="_blank">Claude Code</a></li>
-          <li><a href="https://skills.sh/agent/cursor" target="_blank">Cursor</a></li>
-          <li><a href="https://skills.sh/agent/codex" target="_blank">Codex</a></li>
-          <li><a href="https://skills.sh/agent/github-copilot" target="_blank">GitHub Copilot</a></li>
-          <li><a href="https://skills.sh/agent/windsurf" target="_blank">Windsurf</a></li>
-          <li><a href="https://skills.sh/agent/gemini" target="_blank">Gemini</a></li>
-          <li><a href="https://skills.sh/agent/cline" target="_blank">Cline</a></li>
-          <li><a href="https://skills.sh/agent/amp" target="_blank">AMP</a></li>
-          <li><a href="https://skills.sh/agent/antigravity" target="_blank">Antigravity</a></li>
-          <li><a href="https://skills.sh/agent" target="_blank">全部 Agent →</a></li>
+          <li><a href="/agent/claude-code">Claude Code</a></li>
+          <li><a href="/agent/cursor">Cursor</a></li>
+          <li><a href="/agent/codex">Codex</a></li>
+          <li><a href="/agent/github-copilot">GitHub Copilot</a></li>
+          <li><a href="/agent/windsurf">Windsurf</a></li>
+          <li><a href="/agent/gemini">Gemini</a></li>
+          <li><a href="/agent/cline">Cline</a></li>
+          <li><a href="/agent/amp">AMP</a></li>
+          <li><a href="/agent/antigravity">Antigravity</a></li>
+          <li><a href="/agent/claude-code">全部 Agent →</a></li>
         </ul>
       </div>
     </aside>
 
     <main class="main-panel">
+      <!-- Dynamic header for topic / agent views -->
+      <div class="page-header" id="page-header" style="display: none;">
+        <h2 class="page-title" id="page-title">主题</h2>
+        <p class="page-desc" id="page-desc">描述</p>
+      </div>
+
       <div class="search-container">
         <input type="text" class="search-input" id="search-input" placeholder="输入关键字搜索技能或作者...">
       </div>
 
-      <div class="tab-bar">
-        <button class="tab-btn active" data-tab="all-time">总安装排行</button>
-        <button class="tab-btn" data-tab="trending">正在流行 (24h)</button>
-        <button class="tab-btn" data-tab="hot">最新热门</button>
+      <div class="tab-bar" id="tab-bar">
+        <a class="tab-btn active" href="/">总安装排行</a>
+        <a class="tab-btn" href="/trending">正在流行 (24h)</a>
+        <a class="tab-btn" href="/hot">最新热门</a>
+        <a class="tab-btn" href="/official">官方认证</a>
+        <a class="tab-btn" href="/audits">安全审计</a>
       </div>
 
       <div class="skills-list" id="skills-list">
@@ -563,205 +664,33 @@
   <div class="toast" id="toast">复制成功！已写入剪贴板</div>
 
   <footer>
-    <p>&copy; 2026 Skills CLI 中文目录. 数据来源 <a href="https://skills.sh" style="color:var(--accent-color);text-decoration:none;">skills.sh</a>. Powered by Vercel.</p>
+    <p>&copy; 2026 Skills CLI 中文目录. 数据来源 <a href="https://skills.sh" style="color:var(--accent-color);text-decoration:none;" target="_blank">skills.sh</a>. Powered by Vercel.</p>
   </footer>
 
   <script>
-    // ===== Accurate data from the official skills.sh leaderboard (2026-05-28) =====
-    const SKILLS_DATA = {
-      "all-time": [
-        { rank: 1, name: "find-skills", author: "vercel-labs/skills", installs: "1.7M" },
-        { rank: 2, name: "frontend-design", author: "anthropics/skills", installs: "471.2K" },
-        { rank: 3, name: "vercel-react-best-practices", author: "vercel-labs/agent-skills", installs: "433.2K" },
-        { rank: 4, name: "microsoft-foundry", author: "microsoft/azure-skills", installs: "350.0K" },
-        { rank: 5, name: "web-design-guidelines", author: "vercel-labs/agent-skills", installs: "349.7K" },
-        { rank: 6, name: "azure-ai", author: "microsoft/azure-skills", installs: "348.3K" },
-        { rank: 21, name: "remotion-best-practices", author: "remotion-dev/skills", installs: "334.7K" },
-        { rank: 22, name: "azure-hosted-copilot-sdk", author: "microsoft/azure-skills", installs: "320.3K" },
-        { rank: 23, name: "agent-browser", author: "vercel-labs/agent-browser", installs: "320.0K" },
-        { rank: 24, name: "azure-compute", author: "microsoft/azure-skills", installs: "291.1K" },
-        { rank: 25, name: "azure-cloud-migrate", author: "microsoft/azure-skills", installs: "281.4K" },
-        { rank: 26, name: "skill-creator", author: "anthropics/skills", installs: "238.3K" },
-        { rank: 27, name: "grill-me", author: "mattpocock/skills", installs: "224.1K" },
-        { rank: 28, name: "azure-quotas", author: "microsoft/azure-skills", installs: "218.3K" },
-        { rank: 29, name: "azure-upgrade", author: "microsoft/azure-skills", installs: "210.8K" },
-        { rank: 30, name: "azure-cost-optimization", author: "microsoft/azure-skills", installs: "206.4K" },
-        { rank: 31, name: "supabase-postgres-best-practices", author: "supabase/agent-skills", installs: "194.6K" },
-        { rank: 32, name: "vercel-composition-patterns", author: "vercel-labs/agent-skills", installs: "190.5K" },
-        { rank: 33, name: "ui-ux-pro-max", author: "nextlevelbuilder/ui-ux-pro-max-skill", installs: "187.8K" },
-        { rank: 34, name: "brainstorming", author: "obra/superpowers", installs: "187.1K" },
-        { rank: 35, name: "azure-enterprise-infra-planner", author: "microsoft/azure-skills", installs: "184.8K" },
-        { rank: 36, name: "caveman", author: "juliusbrussee/caveman", installs: "184.6K" },
-        { rank: 37, name: "sleek-design-mobile-apps", author: "sleekdotdesign/agent-skills", installs: "182.2K" },
-        { rank: 38, name: "improve-codebase-architecture", author: "mattpocock/skills", installs: "180.1K" },
-        { rank: 39, name: "azure-kubernetes", author: "microsoft/azure-skills", installs: "177.7K" },
-        { rank: 40, name: "lark-doc", author: "larksuite/cli", installs: "175.1K" },
-        { rank: 41, name: "github-actions-docs", author: "xixu-me/skills", installs: "175.1K" },
-        { rank: 42, name: "lark-base", author: "larksuite/cli", installs: "174.7K" },
-        { rank: 60, name: "openclaw-secure-linux-cloud", author: "xixu-me/skills", installs: "172.5K" },
-        { rank: 65, name: "tdd", author: "mattpocock/skills", installs: "171.9K" },
-        { rank: 66, name: "readme-i18n", author: "xixu-me/skills", installs: "171.7K" },
-        { rank: 67, name: "use-my-browser", author: "xixu-me/skills", installs: "170.3K" },
-        { rank: 68, name: "soultrace", author: "soultrace-ai/soultrace-skill", installs: "169.8K" },
-        { rank: 73, name: "shadcn", author: "shadcn/ui", installs: "163.4K" },
-        { rank: 75, name: "to-prd", author: "mattpocock/skills", installs: "153.4K" },
-        { rank: 76, name: "simple", author: "roin-orca/skills", installs: "153.4K" },
-        { rank: 92, name: "write-a-skill", author: "mattpocock/skills", installs: "142.9K" },
-        { rank: 100, name: "caveman", author: "mattpocock/skills", installs: "137.4K" },
-        { rank: 101, name: "impeccable", author: "pbakaus/impeccable", installs: "134.1K" },
-        { rank: 103, name: "vercel-react-native-skills", author: "vercel-labs/agent-skills", installs: "128.3K" },
-        { rank: 129, name: "pptx", author: "anthropics/skills", installs: "123.6K" },
-        { rank: 130, name: "seo-audit", author: "coreyhaines31/marketingskills", installs: "122.0K" },
-        { rank: 132, name: "pdf", author: "anthropics/skills", installs: "119.6K" },
-        { rank: 136, name: "extract-design-system", author: "arvindrk/extract-design-system", installs: "113.2K" },
-        { rank: 151, name: "next-best-practices", author: "vercel-labs/next-skills", installs: "95.5K" },
-        { rank: 155, name: "supabase", author: "supabase/agent-skills", installs: "92.3K" },
-        { rank: 211, name: "firebase-basics", author: "firebase/agent-skills", installs: "66.4K" },
-        { rank: 220, name: "mcp-builder", author: "anthropics/skills", installs: "63.7K" },
-        { rank: 223, name: "canvas-design", author: "anthropics/skills", installs: "62.8K" },
-        { rank: 235, name: "deploy-to-vercel", author: "vercel-labs/agent-skills", installs: "59.5K" },
-      ],
-      "trending": [
-        { rank: 1, name: "ai-image-generation", author: "skills-shell/skills", installs: "21.9K" },
-        { rank: 6, name: "find-skills", author: "vercel-labs/skills", installs: "18.0K" },
-        { rank: 7, name: "soultrace", author: "soultrace-ai/soultrace-skill", installs: "14.8K" },
-        { rank: 8, name: "grill-me", author: "mattpocock/skills", installs: "6.7K" },
-        { rank: 9, name: "grill-with-docs", author: "mattpocock/skills", installs: "6.2K" },
-        { rank: 10, name: "ai-image-generation", author: "agentspace-so/runcomfy-agent-skills", installs: "6.1K" },
-        { rank: 39, name: "improve-codebase-architecture", author: "mattpocock/skills", installs: "5.7K" },
-        { rank: 40, name: "seedance-v2", author: "runcomfy-com/skills", installs: "5.6K" },
-        { rank: 41, name: "handoff", author: "mattpocock/skills", installs: "5.5K" },
-        { rank: 42, name: "gpt-image-2", author: "doany-ai/skills", installs: "5.5K" },
-        { rank: 43, name: "gpt-image-edit", author: "runcomfy-com/skills", installs: "5.5K" },
-        { rank: 44, name: "lipsync", author: "doany-ai/skills", installs: "5.5K" },
-        { rank: 48, name: "gpt-image-2", author: "agentspace-so/agent-skills", installs: "5.5K" },
-        { rank: 49, name: "ai-video-generation", author: "runcomfy-com/skills", installs: "5.5K" },
-        { rank: 103, name: "tdd", author: "mattpocock/skills", installs: "5.3K" },
-        { rank: 104, name: "diagnose", author: "mattpocock/skills", installs: "5.2K" },
-        { rank: 105, name: "to-prd", author: "mattpocock/skills", installs: "5.2K" },
-        { rank: 106, name: "frontend-design", author: "anthropics/skills", installs: "5.2K" },
-        { rank: 107, name: "setup-matt-pocock-skills", author: "mattpocock/skills", installs: "5.0K" },
-        { rank: 110, name: "agent-browser", author: "vercel-labs/agent-browser", installs: "4.9K" },
-        { rank: 115, name: "impeccable", author: "pbakaus/impeccable", installs: "4.2K" },
-        { rank: 116, name: "agent-browser", author: "skills-shell/skills", installs: "4.1K" },
-        { rank: 117, name: "design-taste-frontend", author: "leonxlnx/taste-skill", installs: "3.8K" },
-        { rank: 118, name: "caveman", author: "juliusbrussee/caveman", installs: "3.5K" },
-        { rank: 119, name: "microsoft-foundry", author: "microsoft/azure-skills", installs: "2.9K" },
-        { rank: 160, name: "vercel-react-best-practices", author: "vercel-labs/agent-skills", installs: "2.6K" },
-        { rank: 191, name: "skill-creator", author: "anthropics/skills", installs: "2.4K" },
-        { rank: 194, name: "web-design-guidelines", author: "vercel-labs/agent-skills", installs: "2.3K" },
-        { rank: 196, name: "supabase-postgres-best-practices", author: "supabase/agent-skills", installs: "2.1K" },
-        { rank: 197, name: "remotion-best-practices", author: "remotion-dev/skills", installs: "1.9K" },
-      ],
-      "hot": [
-        { rank: 1, name: "agent-pulse", author: "jane-o-o-o-o/agent-pulse-skills", installs: "+180" },
-        { rank: 2, name: "design-an-interface", author: "mattpocock/skills", installs: "+34" },
-        { rank: 3, name: "obsidian-vault", author: "mattpocock/skills", installs: "+33" },
-        { rank: 4, name: "nia", author: "nozomio-labs/nia-skill", installs: "+33" },
-        { rank: 5, name: "opentui", author: "msmps/opentui-skill", installs: "+32" },
-        { rank: 6, name: "qa", author: "mattpocock/skills", installs: "+32" },
-        { rank: 19, name: "emblem-ai", author: "emblemcompany/agent-skills", installs: "+15" },
-        { rank: 29, name: "graphite", author: "withgraphite/agent-skills", installs: "+11" },
-        { rank: 30, name: "google-agents-cli-adk-code", author: "google/agents-cli", installs: "+4" },
-        { rank: 31, name: "frontend-design", author: "bytedance/deer-flow", installs: "+4" },
-        { rank: 32, name: "langfuse", author: "langfuse/skills", installs: "+4" },
-        { rank: 43, name: "gh-fix-ci", author: "openai/skills", installs: "+2" },
-        { rank: 44, name: "ast-grep", author: "ast-grep/agent-skill", installs: "+2" },
-        { rank: 46, name: "longbridge-dca", author: "longbridge/skills", installs: "+2" },
-        { rank: 51, name: "prd-to-plan", author: "mattpocock/skills", installs: "+2" },
-        { rank: 55, name: "write-a-prd", author: "mattpocock/skills", installs: "+2" },
-      ],
-    };
-
     // State Variables
-    let currentTab = "all-time";
-    let searchQuery = "";
+    let allSkills = [];
+    let renderedCount = 0;
+    const PAGE_SIZE = 25;
+    let isLoading = false;
+    let searchTimeout = null;
 
     // DOM Elements
     const skillsListEl = document.getElementById("skills-list");
     const searchInputEl = document.getElementById("search-input");
     const toastEl = document.getElementById("toast");
-
-    // Initialize Render
-    renderSkills();
-
-    // Event Listeners for tabs
-    document.querySelectorAll(".tab-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentTab = btn.dataset.tab;
-        renderSkills();
-      });
-    });
-
-    // Search input handler
-    searchInputEl.addEventListener("input", (e) => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      renderSkills();
-    });
-
-    // Main render function
-    function renderSkills() {
-      const data = SKILLS_DATA[currentTab] || [];
-
-      // Filter list
-      const filtered = data.filter(skill => {
-        if (searchQuery) {
-          const matchName = skill.name.toLowerCase().includes(searchQuery);
-          const matchAuthor = skill.author.toLowerCase().includes(searchQuery);
-          return matchName || matchAuthor;
-        }
-        return true;
-      });
-
-      // Clear previous
-      skillsListEl.innerHTML = "";
-
-      if (filtered.length === 0) {
-        skillsListEl.innerHTML = `
-          <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
-            未找到符合条件的技能
-          </div>
-        `;
-        return;
-      }
-
-      // Render items
-      filtered.forEach((skill) => {
-        const itemEl = document.createElement("div");
-        itemEl.className = "skill-item";
-        
-        const installLabel = currentTab === "hot" ? skill.installs : `💾 ${skill.installs} 安装量`;
-        const skillUrl = `https://skills.sh/${skill.author}/${skill.name}`;
-        const copySource = `${skill.author}`;
-        
-        itemEl.innerHTML = `
-          <div class="skill-left">
-            <span class="skill-rank">#${skill.rank}</span>
-            <div class="skill-info">
-              <a href="${skillUrl}" target="_blank" class="skill-title">${skill.name}</a>
-              <span class="skill-author">${skill.author}</span>
-              <div>
-                <span class="skill-installs">${installLabel}</span>
-              </div>
-            </div>
-          </div>
-          <div class="skill-right">
-            <button class="copy-btn" onclick="copyCommand('${copySource}', this)">
-              复制命令
-            </button>
-          </div>
-        `;
-        skillsListEl.appendChild(itemEl);
-      });
-    }
+    const heroSection = document.querySelector(".hero");
+    const pageHeader = document.getElementById("page-header");
+    const pageTitle = document.getElementById("page-title");
+    const pageDesc = document.getElementById("page-desc");
+    const tabBar = document.getElementById("tab-bar");
 
     // Copy command handler
     window.copyCommand = function(sourcePath, btn) {
       const command = `npx skills add ${sourcePath}`;
       navigator.clipboard.writeText(command).then(() => {
         // Change button state
+        const originalText = btn.innerText;
         btn.innerText = "已复制";
         btn.classList.add("copied");
         
@@ -769,12 +698,320 @@
         toastEl.classList.add("show");
         
         setTimeout(() => {
-          btn.innerText = "复制命令";
+          btn.innerText = originalText;
           btn.classList.remove("copied");
           toastEl.classList.remove("show");
         }, 2000);
       });
     };
+
+    // Show Loading Skeletons
+    function showSkeletons() {
+      skillsListEl.innerHTML = Array(5).fill(0).map(() => `
+        <div class="skeleton-item">
+          <div class="skeleton-left">
+            <div class="skeleton-rank"></div>
+            <div class="skeleton-info">
+              <div class="skeleton-title"></div>
+              <div class="skeleton-text"></div>
+            </div>
+          </div>
+          <div class="skeleton-right"></div>
+        </div>
+      `).join('');
+    }
+
+    // Render Next Batch (for Infinite Scroll)
+    function renderNextBatch() {
+      if (allSkills.length === 0) {
+        skillsListEl.innerHTML = `
+          <div style="text-align: center; padding: 4rem; color: var(--text-muted);">
+            未找到任何技能
+          </div>
+        `;
+        return;
+      }
+
+      const start = renderedCount;
+      const end = Math.min(start + PAGE_SIZE, allSkills.length);
+
+      if (start >= allSkills.length) return;
+
+      const currentPath = window.location.pathname;
+      const isHotTab = currentPath === '/hot';
+      const isAuditsTab = currentPath === '/audits';
+
+      for (let i = start; i < end; i++) {
+        const skill = allSkills[i];
+        const itemEl = document.createElement("div");
+        itemEl.className = "skill-item";
+        
+        let installLabel = '';
+        if (isAuditsTab) {
+          installLabel = `🛡️ 安全审计已通过`;
+        } else if (skill.installs) {
+          installLabel = isHotTab ? skill.installs : `💾 ${skill.installs} 安装量`;
+        } else {
+          installLabel = `🟢 官方认证`;
+        }
+        
+        const skillUrl = `https://skills.sh/${skill.path || (skill.author + '/' + skill.name)}`;
+        
+        itemEl.innerHTML = `
+          <div class="skill-left">
+            <span class="skill-rank">#${skill.rank || (i + 1)}</span>
+            <div class="skill-info">
+              <a href="${skillUrl}" target="_blank" class="skill-title">${skill.name}</a>
+              <span class="skill-author">
+                <a href="/${skill.author}" class="author-link" style="color: var(--text-muted); text-decoration: none;">${skill.author}</a>
+              </span>
+              <div>
+                <span class="skill-installs">${installLabel}</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-right">
+            <button class="copy-btn" onclick="copyCommand('${skill.author}', this)">
+              复制命令
+            </button>
+          </div>
+        `;
+        skillsListEl.appendChild(itemEl);
+      }
+
+      renderedCount = end;
+      checkScrollLoad();
+    }
+
+    // Auto load more if the content height is less than client window height
+    function checkScrollLoad() {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollHeight <= clientHeight && renderedCount < allSkills.length) {
+        renderNextBatch();
+      }
+    }
+
+    // Fetch Skills Data from proxy API
+    async function fetchSkillsData(url) {
+      if (isLoading) return;
+      isLoading = true;
+      showSkeletons();
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP 错误: ${res.status}`);
+        const data = await res.json();
+        
+        allSkills = data.skills || [];
+        renderedCount = 0;
+        skillsListEl.innerHTML = ""; // Clear skeletons
+
+        // Update headers dynamically for Topics / Agents / Repos
+        const type = data.type;
+        if (type === 'topic' || type === 'agent' || type === 'repo') {
+          let titleText = '';
+          if (type === 'topic') {
+            titleText = `主题: ${data.title || '分类'}`;
+          } else if (type === 'agent') {
+            titleText = `智能体: ${data.title || 'Agent'}`;
+          } else if (type === 'repo') {
+            titleText = `仓库: ${data.title || '代码库'}`;
+          }
+          pageTitle.innerText = titleText;
+          pageDesc.innerText = data.description || '浏览此分类下所有可用的 Agent 技能。';
+        }
+
+        renderNextBatch();
+      } catch (err) {
+        console.error(err);
+        skillsListEl.innerHTML = `
+          <div style="text-align: center; padding: 4rem 2rem; color: #ef4444;">
+            <svg style="width: 48px; height: 48px; margin: 0 auto 1rem auto; display: block; opacity: 0.8;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            数据获取失败: ${err.message || '未知错误'}<br>
+            <button onclick="handleRoute(window.location.pathname)" style="margin-top: 1rem; background: rgba(59, 130, 246, 0.2); border: 1px solid var(--primary-color); color: var(--text-main); padding: 0.5rem 1.25rem; border-radius: 8px; cursor: pointer; transition: 0.2s;">
+              重新加载
+            </button>
+          </div>
+        `;
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    // Routing Logic
+    async function handleRoute(path) {
+      // Reset scroll
+      window.scrollTo({ top: 0 });
+      
+      // Update UI active states
+      updateActiveUI(path);
+
+      let type = 'leaderboard';
+      let tab = 'all-time';
+      let topic = '';
+      let agent = '';
+      let repo = '';
+
+      if (path === '/' || path === '/index.html') {
+        tab = 'all-time';
+      } else if (path === '/trending') {
+        tab = 'trending';
+      } else if (path === '/hot') {
+        tab = 'hot';
+      } else if (path === '/official') {
+        tab = 'official';
+        type = 'official';
+      } else if (path === '/audits') {
+        tab = 'audits';
+        type = 'audits';
+      } else if (path.startsWith('/topic/')) {
+        topic = path.substring('/topic/'.length);
+        type = 'topic';
+      } else if (path.startsWith('/agent/')) {
+        agent = path.substring('/agent/'.length);
+        type = 'agent';
+      } else {
+        // Match /owner/repo pattern
+        const repoMatch = path.match(/^\/([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+)$/);
+        if (repoMatch) {
+          repo = `${repoMatch[1]}/${repoMatch[2]}`;
+          type = 'repo';
+        } else {
+          // Fallback to home
+          tab = 'all-time';
+        }
+      }
+
+      // Display adjustment
+      if (type === 'leaderboard' || type === 'official' || type === 'audits') {
+        heroSection.style.display = 'block';
+        pageHeader.style.display = 'none';
+        tabBar.style.display = 'flex';
+      } else {
+        heroSection.style.display = 'none';
+        pageHeader.style.display = 'block';
+        tabBar.style.display = 'none';
+        
+        pageTitle.innerText = '正在加载...';
+        pageDesc.innerText = '';
+      }
+
+      // Fetch parameters
+      let fetchUrl = '/api/skills';
+      if (topic) {
+        fetchUrl += `?topic=${encodeURIComponent(topic)}`;
+      } else if (agent) {
+        fetchUrl += `?agent=${encodeURIComponent(agent)}`;
+      } else if (repo) {
+        fetchUrl += `?repo=${encodeURIComponent(repo)}`;
+      } else {
+        fetchUrl += `?tab=${tab}`;
+      }
+
+      await fetchSkillsData(fetchUrl);
+    }
+
+    // Update active highlight classes in Sidebar & Tabs
+    function updateActiveUI(path) {
+      // 1. Tab Links
+      document.querySelectorAll('#tab-bar .tab-btn').forEach(btn => {
+        const href = btn.getAttribute('href');
+        if (href === path || (path === '/index.html' && href === '/')) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // 2. Sidebar Links
+      document.querySelectorAll('.sidebar-list li a').forEach(link => {
+        const href = link.getAttribute('href');
+        let isSame = false;
+        
+        if (href === path) {
+          isSame = true;
+        } else if (href && href !== '/' && path.startsWith(href)) {
+          isSame = true;
+        }
+
+        if (isSame) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    // Intercept all local anchor clicks for SPA navigation
+    document.addEventListener('click', (e) => {
+      const anchor = e.target.closest('a');
+      if (!anchor) return;
+
+      const href = anchor.getAttribute('href');
+      if (!href) return;
+
+      const isLocal = href.startsWith('/') || href.startsWith(window.location.origin) || !href.includes('://');
+      const isExternal = anchor.getAttribute('target') === '_blank';
+
+      if (isLocal && !isExternal) {
+        e.preventDefault();
+        let path = href;
+        if (href.startsWith(window.location.origin)) {
+          path = href.substring(window.location.origin.length);
+        }
+        if (!path.startsWith('/')) {
+          path = '/' + path;
+        }
+
+        history.pushState(null, '', path);
+        handleRoute(path);
+        
+        // Reset search input value when switching tabs
+        searchInputEl.value = "";
+      }
+    });
+
+    // Listen to window back / forward navigation
+    window.addEventListener('popstate', () => {
+      handleRoute(window.location.pathname);
+    });
+
+    // Handle Scroll for Infinite scroll
+    window.addEventListener('scroll', () => {
+      if (isLoading) return;
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 150) {
+        renderNextBatch();
+      }
+    });
+
+    // Setup Debounced Search Input Handler
+    searchInputEl.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+      
+      if (searchTimeout) clearTimeout(searchTimeout);
+
+      searchTimeout = setTimeout(async () => {
+        if (query.length > 0) {
+          heroSection.style.display = 'none';
+          pageHeader.style.display = 'block';
+          tabBar.style.display = 'none';
+          
+          pageTitle.innerText = `搜索结果: "${query}"`;
+          pageDesc.innerText = `找到相关的 Agent 技能列表`;
+          
+          await fetchSkillsData(`/api/skills?q=${encodeURIComponent(query)}`);
+        } else {
+          // Revert to current route
+          handleRoute(window.location.pathname);
+        }
+      }, 300);
+    });
+
+    // Bootstrap routing on first load
+    handleRoute(window.location.pathname);
   </script>
 </body>
 </html>

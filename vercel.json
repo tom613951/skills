@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/topic/:slug", "destination": "/index.html" },
+    { "source": "/agent/:slug", "destination": "/index.html" },
+    { "source": "/official", "destination": "/index.html" },
+    { "source": "/trending", "destination": "/index.html" },
+    { "source": "/hot", "destination": "/index.html" },
+    { "source": "/audits", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
