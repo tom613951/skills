@@ -18,9 +18,9 @@ const SEARCH_API_BASE = process.env.SKILLS_API_URL || 'https://skills.sh';
 
 function formatInstalls(count: number): string {
   if (!count || count <= 0) return '';
-  if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1).replace(/\.0$/, '')}M installs`;
-  if (count >= 1_000) return `${(count / 1_000).toFixed(1).replace(/\.0$/, '')}K installs`;
-  return `${count} install${count === 1 ? '' : 's'}`;
+  if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1).replace(/\.0$/, '')}M 次安装`;
+  if (count >= 1_000) return `${(count / 1_000).toFixed(1).replace(/\.0$/, '')}K 次安装`;
+  return `${count} 次安装`;
 }
 
 export interface SearchSkill {
@@ -103,16 +103,16 @@ async function runSearchPrompt(initialQuery = ''): Promise<SearchSkill | null> {
 
     // Search input line with cursor
     const cursor = `${BOLD}_${RESET}`;
-    lines.push(`${TEXT}Search skills:${RESET} ${query}${cursor}`);
+    lines.push(`${TEXT}搜索技能:${RESET} ${query}${cursor}`);
     lines.push('');
 
     // Results - keep showing existing results while loading new ones
     if (!query || query.length < 2) {
-      lines.push(`${DIM}Start typing to search (min 2 chars)${RESET}`);
+      lines.push(`${DIM}开始输入以进行搜索 (最少输入 2 个字符)${RESET}`);
     } else if (results.length === 0 && loading) {
-      lines.push(`${DIM}Searching...${RESET}`);
+      lines.push(`${DIM}正在搜索...${RESET}`);
     } else if (results.length === 0) {
-      lines.push(`${DIM}No skills found${RESET}`);
+      lines.push(`${DIM}未找到技能${RESET}`);
     } else {
       const maxVisible = 8;
       const visible = results.slice(0, maxVisible);
@@ -132,7 +132,7 @@ async function runSearchPrompt(initialQuery = ''): Promise<SearchSkill | null> {
     }
 
     lines.push('');
-    lines.push(`${DIM}up/down navigate | enter select | esc cancel${RESET}`);
+    lines.push(`${DIM}↑/↓ 键移动 | 回车键选择 | Esc 键取消${RESET}`);
 
     // Write each line
     for (const line of lines) {
@@ -271,7 +271,7 @@ async function isRepoPublic(owner: string, repo: string): Promise<boolean> {
 export async function runFind(args: string[]): Promise<void> {
   const query = args.join(' ');
   const isNonInteractive = !process.stdin.isTTY;
-  const agentTip = `${DIM}Tip: if running in a coding agent, follow these steps:${RESET}
+  const agentTip = `${DIM}提示：如果是在编程 Agent 中运行，请按照以下步骤操作：${RESET}
 ${DIM}  1) npx skills find [query]${RESET}
 ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
 
@@ -287,11 +287,11 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
     });
 
     if (results.length === 0) {
-      console.log(`${DIM}No skills found for "${query}"${RESET}`);
+      console.log(`${DIM}未找到与 "${query}" 相关的技能${RESET}`);
       return;
     }
 
-    console.log(`${DIM}Install with${RESET} npx skills add <owner/repo@skill>`);
+    console.log(`${DIM}安装命令：${RESET} npx skills add <owner/repo@skill>`);
     console.log();
 
     for (const skill of results.slice(0, 6)) {
@@ -310,7 +310,7 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
   if (isNonInteractive || (await isRunningInAgent())) {
     console.log(agentTip);
     console.log();
-    console.log(`${DIM}Usage: npx skills find <query>${RESET}`);
+    console.log(`${DIM}用法：npx skills find <搜索词>${RESET}`);
     return;
   }
 
@@ -325,7 +325,7 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
   });
 
   if (!selected) {
-    console.log(`${DIM}Search cancelled${RESET}`);
+    console.log(`${DIM}搜索已取消${RESET}`);
     console.log();
     return;
   }
@@ -335,7 +335,7 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
   const skillName = selected.name;
 
   console.log();
-  console.log(`${TEXT}Installing ${BOLD}${skillName}${RESET} from ${DIM}${pkg}${RESET}...`);
+  console.log(`${TEXT}正在从 ${DIM}${pkg}${RESET} 安装 ${BOLD}${skillName}${RESET}...`);
   console.log();
 
   // Run add directly since we're in the same CLI
@@ -347,10 +347,10 @@ ${DIM}  2) npx skills add <owner/repo@skill>${RESET}`;
   const info = getOwnerRepoFromString(pkg);
   if (info && (await isRepoPublic(info.owner, info.repo))) {
     console.log(
-      `${DIM}View the skill at${RESET} ${TEXT}https://skills.sh/${selected.slug}${RESET}`
+      `${DIM}在以下网址查看此技能：${RESET} ${TEXT}https://skills.sh/${selected.slug}${RESET}`
     );
   } else {
-    console.log(`${DIM}Discover more skills at${RESET} ${TEXT}https://skills.sh${RESET}`);
+    console.log(`${DIM}发现更多技能请访问：${RESET} ${TEXT}https://skills.sh${RESET}`);
   }
 
   console.log();

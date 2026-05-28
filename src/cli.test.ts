@@ -7,12 +7,12 @@ describe('skills CLI', () => {
   describe('--help', () => {
     it('should display help message', () => {
       const output = runCliOutput(['--help']);
-      expect(output).toContain('Usage: skills <command> [options]');
-      expect(output).toContain('Manage Skills:');
+      expect(output).toContain('用法： skills <command> [options]');
+      expect(output).toContain('管理技能：');
       expect(output).toContain('init [name]');
       expect(output).toContain('add <package>');
       expect(output).toContain('update');
-      expect(output).toContain('Add Options:');
+      expect(output).toContain('添加选项：');
       expect(output).toContain('-g, --global');
       expect(output).toContain('-a, --agent');
       expect(output).toContain('-s, --skill');
@@ -46,7 +46,7 @@ describe('skills CLI', () => {
   describe('no arguments', () => {
     it('should display banner', () => {
       const output = stripLogo(runCliOutput([]));
-      expect(output).toContain('The open agent skills ecosystem');
+      expect(output).toContain('开放式 Agent 技能生态系统');
       expect(output).toContain('npx skills add');
       expect(output).toContain('npx skills update');
       expect(output).toContain('npx skills init');
@@ -58,8 +58,8 @@ describe('skills CLI', () => {
     it('should show error for unknown command', () => {
       const output = runCliOutput(['unknown-command']);
       expect(output).toMatchInlineSnapshot(`
-        "Unknown command: unknown-command
-        Run skills --help for usage.
+        "未知命令：unknown-command
+        运行 skills --help 查看用法。
         "
       `);
     });

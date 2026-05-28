@@ -29,7 +29,7 @@ describe('add command', () => {
 
   it('should show error for non-existent local path', () => {
     const result = runCli(['add', './non-existent-path', '-y'], testDir);
-    expect(result.stdout).toContain('Local path does not exist');
+    expect(result.stdout).toContain('本地路径不存在');
     expect(result.exitCode).toBe(1);
   });
 
@@ -58,8 +58,8 @@ This is a test skill.
 
   it('should show no skills found for empty directory', () => {
     const result = runCli(['add', testDir, '-y'], testDir);
-    expect(result.stdout).toContain('No skills found');
-    expect(result.stdout).toContain('No valid skills found');
+    expect(result.stdout).toContain('未找到技能');
+    expect(result.stdout).toContain('未找到有效的技能');
     expect(result.exitCode).toBe(1);
   });
 
@@ -86,7 +86,7 @@ Instructions here.
 
     const result = runCli(['add', testDir, '-y', '-g', '--agent', 'claude-code'], targetDir);
     expect(result.stdout).toContain('my-skill');
-    expect(result.stdout).toContain('Done!');
+    expect(result.stdout).toContain('完成！');
     expect(result.exitCode).toBe(0);
   });
 
@@ -137,7 +137,7 @@ description: Test
     );
 
     const result = runCli(['add', testDir, '-y', '--agent', 'invalid-agent'], testDir);
-    expect(result.stdout).toContain('Invalid agents');
+    expect(result.stdout).toContain('无效的 Agent');
     expect(result.exitCode).toBe(1);
   });
 
@@ -155,7 +155,7 @@ description: Test
 
   it('should restore from lock file with experimental_install', () => {
     const result = runCli(['experimental_install'], testDir);
-    expect(result.stdout).toContain('No project skills found in skills-lock.json');
+    expect(result.stdout).toContain('在 skills-lock.json 中未找到任何项目技能');
   });
 
   describe('internal skills', () => {
@@ -425,22 +425,22 @@ describe('openclaw source blocking', () => {
 
   it('should block openclaw/skills without --dangerously-accept-openclaw-risks', () => {
     const result = runCli(['add', 'openclaw/skills', '-y'], testDir);
-    expect(result.stdout).toContain('unverified community submissions');
+    expect(result.stdout).toContain('未经核实的社区提交');
     expect(result.stdout).toContain('--dangerously-accept-openclaw-risks');
-    expect(result.stdout).toContain('Installation blocked');
+    expect(result.stdout).toContain('安装已拦截');
     expect(result.exitCode).toBe(1);
   });
 
   it('should block openclaw/anything without the flag', () => {
     const result = runCli(['add', 'openclaw/some-repo', '-y'], testDir);
-    expect(result.stdout).toContain('unverified community submissions');
+    expect(result.stdout).toContain('未经核实的社区提交');
     expect(result.stdout).toContain('--dangerously-accept-openclaw-risks');
     expect(result.exitCode).toBe(1);
   });
 
   it('should block OpenClaw/skills (case-insensitive)', () => {
     const result = runCli(['add', 'OpenClaw/skills', '-y'], testDir);
-    expect(result.stdout).toContain('unverified community submissions');
+    expect(result.stdout).toContain('未经核实的社区提交');
     expect(result.stdout).toContain('--dangerously-accept-openclaw-risks');
     expect(result.exitCode).toBe(1);
   });

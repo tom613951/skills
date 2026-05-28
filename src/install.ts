@@ -20,9 +20,9 @@ export async function runInstallFromLock(args: string[]): Promise<void> {
   const skillEntries = Object.entries(lock.skills);
 
   if (skillEntries.length === 0) {
-    p.log.warn('No project skills found in skills-lock.json');
+    p.log.warn('在 skills-lock.json 中未找到任何项目技能');
     p.log.info(
-      `Add project-level skills with ${pc.cyan('npx skills add <package>')} (without ${pc.cyan('-g')})`
+      `请使用 ${pc.cyan('npx skills add <package>')}（不带 ${pc.cyan('-g')}）来添加项目级技能`
     );
     return;
   }
@@ -55,7 +55,7 @@ export async function runInstallFromLock(args: string[]): Promise<void> {
   const remoteCount = skillEntries.length - nodeModuleSkills.length;
   if (remoteCount > 0) {
     p.log.info(
-      `Restoring ${pc.cyan(String(remoteCount))} skill${remoteCount !== 1 ? 's' : ''} from skills-lock.json into ${pc.dim('.agents/skills/')}`
+      `正在从 skills-lock.json 恢复 ${pc.cyan(String(remoteCount))} 个技能到 ${pc.dim('.agents/skills/')}`
     );
   }
 
@@ -69,22 +69,20 @@ export async function runInstallFromLock(args: string[]): Promise<void> {
       });
     } catch (error) {
       p.log.error(
-        `Failed to install from ${pc.cyan(source)}: ${error instanceof Error ? error.message : 'Unknown error'}`
+        `从 ${pc.cyan(source)} 安装失败: ${error instanceof Error ? error.message : '未知错误'}`
       );
     }
   }
 
   // Handle node_modules skills via sync
   if (nodeModuleSkills.length > 0) {
-    p.log.info(
-      `${pc.cyan(String(nodeModuleSkills.length))} skill${nodeModuleSkills.length !== 1 ? 's' : ''} from node_modules`
-    );
+    p.log.info(`来自 node_modules 的 ${pc.cyan(String(nodeModuleSkills.length))} 个技能`);
     try {
       const { options: syncOptions } = parseSyncOptions(args);
       await runSync(args, { ...syncOptions, yes: true, agent: universalAgentNames });
     } catch (error) {
       p.log.error(
-        `Failed to sync node_modules skills: ${error instanceof Error ? error.message : 'Unknown error'}`
+        `同步 node_modules 技能失败: ${error instanceof Error ? error.message : '未知错误'}`
       );
     }
   }

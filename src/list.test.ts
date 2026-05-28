@@ -77,14 +77,14 @@ describe('list command', () => {
   describe('CLI integration', () => {
     it('should run list command', () => {
       const result = runCli(['list'], testDir);
-      // Empty project dir shows "No project skills found"
-      expect(result.stdout).toContain('No project skills found');
+      // Empty project dir shows "未找到项目技能"
+      expect(result.stdout).toContain('未找到项目技能');
       expect(result.exitCode).toBe(0);
     });
 
     it('should run ls alias', () => {
       const result = runCli(['ls'], testDir);
-      expect(result.stdout).toContain('No project skills found');
+      expect(result.stdout).toContain('未找到项目技能');
       expect(result.exitCode).toBe(0);
     });
 
@@ -148,8 +148,8 @@ description: A skill for JSON testing
 
     it('should show message when no project skills found', () => {
       const result = runCli(['list'], testDir);
-      expect(result.stdout).toContain('No project skills found');
-      expect(result.stdout).toContain('Try listing global skills with -g');
+      expect(result.stdout).toContain('未找到项目技能');
+      expect(result.stdout).toContain('请尝试使用 -g 参数来列出全局技能');
       expect(result.exitCode).toBe(0);
     });
 
@@ -172,7 +172,7 @@ This is a test skill.
 
       const result = runCli(['list'], testDir);
       expect(result.stdout).toContain('test-skill');
-      expect(result.stdout).toContain('Project Skills');
+      expect(result.stdout).toContain('项目技能');
       // Description should not be shown
       expect(result.stdout).not.toContain('A test skill for listing');
       expect(result.exitCode).toBe(0);
@@ -208,7 +208,7 @@ description: Second skill
       const result = runCli(['list'], testDir);
       expect(result.stdout).toContain('skill-one');
       expect(result.stdout).toContain('skill-two');
-      expect(result.stdout).toContain('Project Skills');
+      expect(result.stdout).toContain('项目技能');
       expect(result.exitCode).toBe(0);
     });
 
@@ -229,12 +229,12 @@ description: A project skill
       const result = runCli(['list', '-g'], testDir);
       // Should not show project skill when -g is specified
       expect(result.stdout).not.toContain('project-skill');
-      expect(result.stdout).toContain('Global Skills');
+      expect(result.stdout).toContain('全局技能');
     });
 
     it('should show error for invalid agent filter', () => {
       const result = runCli(['list', '-a', 'invalid-agent'], testDir);
-      expect(result.stdout).toContain('Invalid agents');
+      expect(result.stdout).toContain('无效的代理');
       expect(result.stdout).toContain('invalid-agent');
       expect(result.exitCode).toBe(1);
     });
@@ -331,12 +331,12 @@ description: A test skill
     it('should include list command in help', () => {
       const result = runCli(['--help']);
       expect(result.stdout).toContain('list, ls');
-      expect(result.stdout).toContain('List installed skills');
+      expect(result.stdout).toContain('列出已安装的技能');
     });
 
     it('should include list options in help', () => {
       const result = runCli(['--help']);
-      expect(result.stdout).toContain('List Options:');
+      expect(result.stdout).toContain('列表选项：');
       expect(result.stdout).toContain('-g, --global');
       expect(result.stdout).toContain('-a, --agent');
     });
@@ -353,7 +353,7 @@ description: A test skill
     it('should include list command in banner', () => {
       const result = runCli([]);
       expect(result.stdout).toContain('npx skills list');
-      expect(result.stdout).toContain('List installed skills');
+      expect(result.stdout).toContain('列出已安装的技能');
     });
   });
 });

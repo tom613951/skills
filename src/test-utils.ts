@@ -28,11 +28,26 @@ export function runCli(
   timeout?: number
 ): { stdout: string; stderr: string; exitCode: number } {
   try {
+    const baseEnv = { ...process.env };
+    // Clear agent-detection env vars so CLI tests run in standard non-agent mode
+    for (const key of Object.keys(baseEnv)) {
+      if (
+        key.startsWith('ANTIGRAVITY') ||
+        key.startsWith('CLAUDE') ||
+        key.startsWith('CURSOR') ||
+        key.startsWith('AIDER') ||
+        key.startsWith('COWORK') ||
+        key.startsWith('GEMINI') ||
+        key.startsWith('VSCODE')
+      ) {
+        delete baseEnv[key];
+      }
+    }
     const output = execSync(`node "${CLI_PATH}" ${args.join(' ')}`, {
       encoding: 'utf-8',
       cwd,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: env ? { ...process.env, ...env } : undefined,
+      env: env ? { ...baseEnv, ...env } : baseEnv,
       timeout: timeout ?? 30000,
     });
     return { stdout: stripAnsi(output), stderr: '', exitCode: 0 };
@@ -56,11 +71,26 @@ export function runCliWithInput(
   cwd?: string
 ): { stdout: string; stderr: string; exitCode: number } {
   try {
+    const baseEnv = { ...process.env };
+    for (const key of Object.keys(baseEnv)) {
+      if (
+        key.startsWith('ANTIGRAVITY') ||
+        key.startsWith('CLAUDE') ||
+        key.startsWith('CURSOR') ||
+        key.startsWith('AIDER') ||
+        key.startsWith('COWORK') ||
+        key.startsWith('GEMINI') ||
+        key.startsWith('VSCODE')
+      ) {
+        delete baseEnv[key];
+      }
+    }
     const output = execSync(`node "${CLI_PATH}" ${args.join(' ')}`, {
       encoding: 'utf-8',
       cwd,
       input: input + '\n',
       stdio: ['pipe', 'pipe', 'pipe'],
+      env: baseEnv,
     });
     return { stdout: stripAnsi(output), stderr: '', exitCode: 0 };
   } catch (error: any) {

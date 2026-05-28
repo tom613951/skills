@@ -126,28 +126,28 @@ export async function resolveUpdateScope(options: UpdateCheckOptions): Promise<U
   }
 
   const scope = await p.select({
-    message: 'Update scope',
+    message: '更新范围',
     options: [
       {
         value: 'project' as UpdateScope,
-        label: 'Project',
-        hint: 'Update skills in current directory',
+        label: '项目级',
+        hint: '更新当前项目目录中的技能',
       },
       {
         value: 'global' as UpdateScope,
-        label: 'Global',
-        hint: 'Update skills in home directory',
+        label: '全局',
+        hint: '更新用户家目录中的技能',
       },
       {
         value: 'both' as UpdateScope,
-        label: 'Both',
-        hint: 'Update all skills',
+        label: '两者均更新',
+        hint: '更新所有已安装的技能',
       },
     ],
   });
 
   if (p.isCancel(scope)) {
-    p.cancel('Cancelled');
+    p.cancel('已取消');
     process.exit(0);
   }
 
@@ -170,21 +170,21 @@ export interface SkippedSkill {
 
 export function getSkipReason(entry: SkillLockEntry): string {
   if (entry.sourceType === 'local') {
-    return 'Local path';
+    return '本地路径';
   }
   if (entry.sourceType === 'git') {
-    return 'Git URL';
+    return 'Git 链接';
   }
   if (entry.sourceType === 'well-known') {
-    return 'Well-known skill';
+    return '常见技能';
   }
   if (!entry.skillFolderHash) {
-    return 'Private or deleted repo';
+    return '私有或已删除的仓库';
   }
   if (!entry.skillPath) {
-    return 'No skill path recorded';
+    return '未记录技能路径';
   }
-  return 'No version tracking';
+  return '无版本跟踪';
 }
 
 export function getInstallSource(skill: SkippedSkill): string {
@@ -201,7 +201,7 @@ export function getInstallSource(skill: SkippedSkill): string {
 export function printSkippedSkills(skipped: SkippedSkill[]): void {
   if (skipped.length === 0) return;
   console.log();
-  console.log(`${DIM}${skipped.length} skill(s) cannot be checked automatically:${RESET}`);
+  console.log(`${DIM}${skipped.length} 个技能无法自动检查更新：${RESET}`);
 
   const grouped = new Map<string, SkippedSkill[]>();
   for (const skill of skipped) {
@@ -222,7 +222,7 @@ export function printSkippedSkills(skipped: SkippedSkill[]): void {
       const names = skills.map((s) => sanitizeMetadata(s.name)).join(', ');
       console.log(`  ${TEXT}•${RESET} ${names} ${DIM}(${reason})${RESET}`);
     }
-    console.log(`    ${DIM}To update: ${TEXT}npx skills add ${source} -g -y${RESET}`);
+    console.log(`    ${DIM}更新命令：${TEXT}npx skills add ${source} -g -y${RESET}`);
   }
 }
 
@@ -260,7 +260,7 @@ export async function checkAndPromptForDeletions(
   if (deletedSkills.length > 0) {
     console.log();
     console.log(
-      `${DIM}Warning:${RESET} The following skills from ${DIM}${source}${RESET} appear to have been deleted upstream:`
+      `${DIM}警告：${RESET} 来自 ${DIM}${source}${RESET} 的以下技能似乎在原仓库已被删除：`
     );
     for (const s of deletedSkills) {
       console.log(`  ${DIM}•${RESET} ${s}`);
@@ -269,15 +269,15 @@ export async function checkAndPromptForDeletions(
     const isNonInteractive = options.yes || !process.stdin.isTTY;
 
     if (isNonInteractive) {
-      console.log(`${DIM}Skipping deletion in non-interactive mode.${RESET}`);
+      console.log(`${DIM}非交互模式下跳过删除操作。${RESET}`);
     } else {
       const confirmed = await p.confirm({
-        message: `Would you like to remove the local copies of these deleted skills?`,
+        message: `是否删除这些已被原仓库删除的技能的本地副本？`,
       });
 
       if (confirmed && !p.isCancel(confirmed)) {
         for (const s of deletedSkills) {
-          console.log(`${DIM}Removing${RESET} ${s}...`);
+          console.log(`${DIM}正在移除${RESET} ${s}...`);
           await removeCommand([s], { yes: true, global: isGlobal });
         }
       }
@@ -296,8 +296,10 @@ export async function updateGlobalSkills(
 
   if (skillNames.length === 0) {
     if (!options.skills) {
-      console.log(`${DIM}No global skills tracked in lock file.${RESET}`);
-      console.log(`${DIM}Install skills with${RESET} ${TEXT}npx skills add <package> -g${RESET}`);
+      console.log(`${DIM}锁文件中未记录任何全局技能。${RESET}`);
+      console.log(
+        `${DIM}使用以下命令安装技能：${RESET} ${TEXT}npx skills add <package> -g${RESET}`
+      );
     }
     return { successCount, failCount, checkedCount: 0 };
   }
@@ -337,7 +339,7 @@ export async function updateGlobalSkills(
   for (const [source, itemsForSource] of bySource) {
     const firstEntry = itemsForSource[0]!.entry;
 
-    process.stdout.write(`\r${DIM}Checking skills from source: ${source}${RESET}\x1b[K\n`);
+    process.stdout.write(`\r${DIM}正在检查来自此源的技能：${source}${RESET}\x1b[K\n`);
 
     try {
       const tree = await fetchRepoTree(source, firstEntry.ref, getGitHubToken);
@@ -365,10 +367,10 @@ export async function updateGlobalSkills(
           }
         }
       } else {
-        console.log(`  ${DIM}✗ Failed to fetch tree for ${source}${RESET}`);
+        console.log(`  ${DIM}✗ 获取 ${source} 的目录树失败${RESET}`);
       }
     } catch (error) {
-      console.log(`  ${DIM}✗ Error checking skills from ${source}${RESET}`);
+      console.log(`  ${DIM}✗ 检查来自 ${source} 的技能时出错${RESET}`);
     }
   }
 
@@ -380,7 +382,7 @@ export async function updateGlobalSkills(
 
   if (checkable.length === 0 && skipped.length === 0) {
     if (!options.skills) {
-      console.log(`${DIM}No global skills to check.${RESET}`);
+      console.log(`${DIM}没有可检查的全局技能。${RESET}`);
     }
     return { successCount, failCount, checkedCount: 0 };
   }
@@ -391,24 +393,22 @@ export async function updateGlobalSkills(
   }
 
   if (updates.length === 0) {
-    console.log(`${TEXT}✓ All global skills are up to date${RESET}`);
+    console.log(`${TEXT}✓ 所有全局技能都已经是最新版本${RESET}`);
     return { successCount, failCount, checkedCount };
   }
 
-  console.log(`${TEXT}Found ${updates.length} global update(s)${RESET}`);
+  console.log(`${TEXT}找到 ${updates.length} 个全局更新${RESET}`);
   console.log();
 
   for (const update of updates) {
     const safeName = sanitizeMetadata(update.name);
-    console.log(`${TEXT}Updating ${safeName}...${RESET}`);
+    console.log(`${TEXT}正在更新 ${safeName}...${RESET}`);
     const installUrl = buildUpdateInstallSource(update.entry);
 
     const cliEntry = join(__dirname, '..', 'bin', 'cli.mjs');
     if (!existsSync(cliEntry)) {
       failCount++;
-      console.log(
-        `  ${DIM}✗ Failed to update ${safeName}: CLI entrypoint not found at ${cliEntry}${RESET}`
-      );
+      console.log(`  ${DIM}✗ 更新 ${safeName} 失败：未找到 CLI 入口点 ${cliEntry}${RESET}`);
       continue;
     }
     const result = spawnSync(process.execPath, [cliEntry, 'add', installUrl, '-g', '-y'], {
@@ -419,10 +419,10 @@ export async function updateGlobalSkills(
 
     if (result.status === 0) {
       successCount++;
-      console.log(`  ${TEXT}✓${RESET} Updated ${safeName}`);
+      console.log(`  ${TEXT}✓${RESET} 已更新 ${safeName}`);
     } else {
       failCount++;
-      console.log(`  ${DIM}✗ Failed to update ${safeName}${RESET}`);
+      console.log(`  ${DIM}✗ 更新 ${safeName} 失败${RESET}`);
     }
   }
 
@@ -439,9 +439,9 @@ export async function updateProjectSkills(
 
   if (projectSkills.length === 0) {
     if (!options.skills) {
-      console.log(`${DIM}No project skills to update.${RESET}`);
+      console.log(`${DIM}没有要更新的项目级技能。${RESET}`);
       console.log(
-        `${DIM}Install project skills with${RESET} ${TEXT}npx skills add <package>${RESET}`
+        `${DIM}使用以下命令安装项目级技能：${RESET} ${TEXT}npx skills add <package>${RESET}`
       );
     }
     return { successCount, failCount, foundCount: 0 };
@@ -451,7 +451,7 @@ export async function updateProjectSkills(
   const legacy = projectSkills.filter((s) => !s.entry.skillPath);
 
   if (updatable.length === 0) {
-    console.log(`${DIM}No project skills can be updated in place.${RESET}`);
+    console.log(`${DIM}没有可以就地更新的项目级技能。${RESET}`);
     printLegacyProjectSkills(legacy);
     return { successCount, failCount, foundCount: projectSkills.length };
   }
@@ -474,14 +474,14 @@ export async function updateProjectSkills(
   }
 
   const targetParts: string[] = [];
-  if (hasUniversal) targetParts.push('Universal');
+  if (hasUniversal) targetParts.push('通用');
   targetParts.push(...targetAgentNames);
 
   if (targetParts.length > 0) {
-    console.log(`${TEXT}Updating for: ${targetParts.join(', ')}${RESET}`);
+    console.log(`${TEXT}正在更新以下 Agent：${targetParts.join(', ')}${RESET}`);
   }
 
-  console.log(`${TEXT}Refreshing ${updatable.length} skill(s)...${RESET}`);
+  console.log(`${TEXT}正在刷新 ${updatable.length} 个技能...\${RESET}`);
   console.log();
 
   const bySource = new Map<string, typeof updatable>();
@@ -496,7 +496,7 @@ export async function updateProjectSkills(
   const cliEntry = join(__dirname, '..', 'bin', 'cli.mjs');
 
   if (!existsSync(cliEntry)) {
-    console.log(`${DIM}✗ CLI entrypoint not found at ${cliEntry}${RESET}`);
+    console.log(`${DIM}✗ 未找到 CLI 入口点 ${cliEntry}${RESET}`);
     return { successCount, failCount: updatable.length, foundCount: projectSkills.length };
   }
 
@@ -530,7 +530,7 @@ export async function updateProjectSkills(
         discoveredPaths
       );
     } catch (error) {
-      console.log(`${DIM}✗ Failed to check for deleted skills from ${source}${RESET}`);
+      console.log(`${DIM}✗ 检查来自 ${source} 的被删除技能失败${RESET}`);
     } finally {
       if (tempDir) {
         await cleanupTempDir(tempDir);
@@ -541,7 +541,7 @@ export async function updateProjectSkills(
 
     for (const skill of remainingSkills) {
       const safeName = sanitizeMetadata(skill.name);
-      console.log(`${TEXT}Updating ${safeName}...${RESET}`);
+      console.log(`${TEXT}正在更新 ${safeName}...${RESET}`);
       const installUrl = formatSourceInput(skill.entry.source, skill.entry.ref);
 
       const result = spawnSync(
@@ -556,10 +556,10 @@ export async function updateProjectSkills(
 
       if (result.status === 0) {
         successCount++;
-        console.log(`  ${TEXT}✓${RESET} Updated ${safeName}`);
+        console.log(`  ${TEXT}✓${RESET} 已更新 ${safeName}`);
       } else {
         failCount++;
-        console.log(`  ${DIM}✗ Failed to update ${safeName}${RESET}`);
+        console.log(`  ${DIM}✗ 更新 ${safeName} 失败${RESET}`);
       }
     }
   }
@@ -574,12 +574,12 @@ export function printLegacyProjectSkills(
   if (legacy.length === 0) return;
   console.log();
   console.log(
-    `${DIM}${legacy.length} project skill(s) cannot be updated automatically (installed before skillPath tracking):${RESET}`
+    `${DIM}${legacy.length} 个项目级技能无法自动更新 (在支持 skillPath 跟踪之前已安装)：${RESET}`
   );
   for (const skill of legacy) {
     const reinstall = formatSourceInput(skill.entry.source, skill.entry.ref);
     console.log(`  ${TEXT}•${RESET} ${sanitizeMetadata(skill.name)}`);
-    console.log(`    ${DIM}To refresh: ${TEXT}npx skills add ${reinstall} -y${RESET}`);
+    console.log(`    ${DIM}要刷新：${TEXT}npx skills add ${reinstall} -y${RESET}`);
   }
 }
 
@@ -588,9 +588,9 @@ export async function runUpdate(args: string[] = []): Promise<void> {
   const scope = await resolveUpdateScope(options);
 
   if (options.skills) {
-    console.log(`${TEXT}Updating ${options.skills.join(', ')}...${RESET}`);
+    console.log(`${TEXT}正在更新 ${options.skills.join(', ')}...${RESET}`);
   } else {
-    console.log(`${TEXT}Checking for skill updates...${RESET}`);
+    console.log(`${TEXT}正在检查技能更新...${RESET}`);
   }
   console.log();
 
@@ -600,7 +600,7 @@ export async function runUpdate(args: string[] = []): Promise<void> {
 
   if (scope === 'global' || scope === 'both') {
     if (scope === 'both' && !options.skills) {
-      console.log(`${BOLD}Global Skills${RESET}`);
+      console.log(`${BOLD}全局技能${RESET}`);
     }
     const { successCount, failCount, checkedCount } = await updateGlobalSkills(options);
     totalSuccess += successCount;
@@ -613,7 +613,7 @@ export async function runUpdate(args: string[] = []): Promise<void> {
 
   if (scope === 'project' || scope === 'both') {
     if (scope === 'both' && !options.skills) {
-      console.log(`${BOLD}Project Skills${RESET}`);
+      console.log(`${BOLD}项目级技能${RESET}`);
     }
     const { successCount, failCount, foundCount } = await updateProjectSkills(options);
     totalSuccess += successCount;
@@ -622,15 +622,15 @@ export async function runUpdate(args: string[] = []): Promise<void> {
   }
 
   if (options.skills && totalFound === 0) {
-    console.log(`${DIM}No installed skills found matching: ${options.skills.join(', ')}${RESET}`);
+    console.log(`${DIM}未找到匹配的已安装技能：${options.skills.join(', ')}${RESET}`);
   }
 
   console.log();
   if (totalSuccess > 0) {
-    console.log(`${TEXT}✓ Updated ${totalSuccess} skill(s)${RESET}`);
+    console.log(`${TEXT}✓ 已成功更新 ${totalSuccess} 个技能${RESET}`);
   }
   if (totalFail > 0) {
-    console.log(`${DIM}Failed to update ${totalFail} skill(s)${RESET}`);
+    console.log(`${DIM}更新失败：${totalFail} 个技能${RESET}`);
   }
 
   track({

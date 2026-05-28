@@ -84,12 +84,12 @@ Instructions.
       mkdirSync(join(testDir, 'node_modules'), { recursive: true });
 
       const result = runCli(['experimental_sync', '-y'], testDir);
-      expect(result.stdout).toContain('No skills found');
+      expect(result.stdout).toContain('未找到技能');
     });
 
     it('should show no skills found when no node_modules exists', () => {
       const result = runCli(['experimental_sync', '-y'], testDir);
-      expect(result.stdout).toContain('No skills found');
+      expect(result.stdout).toContain('未找到技能');
     });
   });
 
@@ -187,7 +187,7 @@ description: Test caching
 
       // Second sync - should say up to date
       const result = runCli(['experimental_sync', '-y', '-a', 'claude-code'], testDir);
-      expect(result.stdout).toContain('up to date');
+      expect(result.stdout).toContain('最新版本');
     });
 
     it('should reinstall when --force is used', () => {
@@ -210,7 +210,7 @@ description: Test force
       // Second sync with --force should reinstall
       const result = runCli(['experimental_sync', '-y', '-a', 'claude-code', '--force'], testDir);
       expect(result.stdout).toContain('force-skill');
-      expect(result.stdout).not.toContain('All skills are up to date');
+      expect(result.stdout).not.toContain('所有技能都已经是最新版本');
     });
   });
 

@@ -62,14 +62,13 @@ This is a test skill.
   describe('with no skills installed', () => {
     it('should show message when no skills found', () => {
       const result = runCli(['remove', '-y'], testDir);
-      expect(result.stdout).toContain('No skills found');
-      expect(result.stdout).toContain('to remove');
+      expect(result.stdout).toContain('未找到可移除的技能');
       expect(result.exitCode).toBe(0);
     });
 
     it('should show error for non-existent skill name', () => {
       const result = runCli(['remove', 'non-existent-skill', '-y'], testDir);
-      expect(result.stdout).toContain('No skills found');
+      expect(result.stdout).toContain('未找到可移除的技能');
       expect(result.exitCode).toBe(0);
     });
   });
@@ -93,8 +92,8 @@ This is a test skill.
     it('should remove specific skill by name with -y flag', () => {
       const result = runCli(['remove', 'skill-one', '-y'], testDir);
 
-      expect(result.stdout).toContain('Successfully removed');
-      expect(result.stdout).toContain('1 skill');
+      expect(result.stdout).toContain('成功移除了');
+      expect(result.stdout).toContain('1 个技能');
 
       // Verify skill was removed from canonical location
       expect(existsSync(join(skillsDir, 'skill-one'))).toBe(false);
@@ -107,8 +106,8 @@ This is a test skill.
     it('should remove multiple skills by name', () => {
       const result = runCli(['remove', 'skill-one', 'skill-two', '-y'], testDir);
 
-      expect(result.stdout).toContain('Successfully removed');
-      expect(result.stdout).toContain('2 skill');
+      expect(result.stdout).toContain('成功移除了');
+      expect(result.stdout).toContain('2 个技能');
 
       expect(existsSync(join(skillsDir, 'skill-one'))).toBe(false);
       expect(existsSync(join(skillsDir, 'skill-two'))).toBe(false);
@@ -118,8 +117,8 @@ This is a test skill.
     it('should remove all skills with --all flag', () => {
       const result = runCli(['remove', '--all', '-y'], testDir);
 
-      expect(result.stdout).toContain('Successfully removed');
-      expect(result.stdout).toContain('3 skill');
+      expect(result.stdout).toContain('成功移除了');
+      expect(result.stdout).toContain('3 个技能');
 
       // All skills removed
       expect(existsSync(join(skillsDir, 'skill-one'))).toBe(false);
@@ -130,14 +129,14 @@ This is a test skill.
     it('should show error for non-existent skill name when skills exist', () => {
       const result = runCli(['remove', 'non-existent', '-y'], testDir);
 
-      expect(result.stdout).toContain('No matching skills');
+      expect(result.stdout).toContain('未找到与以下内容匹配的技能');
       expect(result.exitCode).toBe(0);
     });
 
     it('should be case-insensitive when matching skill names', () => {
       const result = runCli(['remove', 'SKILL-ONE', '-y'], testDir);
 
-      expect(result.stdout).toContain('Successfully removed');
+      expect(result.stdout).toContain('成功移除了');
       expect(existsSync(join(skillsDir, 'skill-one'))).toBe(false);
     });
 
@@ -157,10 +156,10 @@ This is a test skill.
       const result = runCliWithInput(['remove', 'skill-one', 'skill-two'], 'n', testDir);
 
       // Should show the skills that will be removed
-      expect(result.stdout).toContain('Skills to remove');
+      expect(result.stdout).toContain('待移除的技能');
       expect(result.stdout).toContain('skill-one');
       expect(result.stdout).toContain('skill-two');
-      expect(result.stdout).toContain('uninstall');
+      expect(result.stdout).toContain('卸载');
 
       // Skills should NOT be removed since we cancelled
       expect(existsSync(join(skillsDir, 'skill-one'))).toBe(true);
@@ -178,9 +177,9 @@ This is a test skill.
     it('should show error for invalid agent name', () => {
       const result = runCli(['remove', 'test-skill', '--agent', 'invalid-agent', '-y'], testDir);
 
-      expect(result.stdout).toContain('Invalid agents');
+      expect(result.stdout).toContain('无效的 Agent');
       expect(result.stdout).toContain('invalid-agent');
-      expect(result.stdout).toContain('Valid agents');
+      expect(result.stdout).toContain('有效的 Agent');
       expect(result.exitCode).toBe(1);
     });
 
@@ -218,13 +217,13 @@ This is a test skill.
 
     it('should support "rm" alias', () => {
       const result = runCli(['rm', 'alias-test-skill', '-y'], testDir);
-      expect(result.stdout).toContain('Successfully removed');
+      expect(result.stdout).toContain('成功移除了');
       expect(result.exitCode).toBe(0);
     });
 
     it('should support "r" alias', () => {
       const result = runCli(['r', 'alias-test-skill', '-y'], testDir);
-      expect(result.stdout).toContain('Successfully removed');
+      expect(result.stdout).toContain('成功移除了');
       expect(result.exitCode).toBe(0);
     });
   });
@@ -235,7 +234,7 @@ This is a test skill.
       createTestSkill('skill_with_underscores');
 
       const result = runCli(['remove', 'skill-with-dashes', '-y'], testDir);
-      expect(result.stdout).toContain('Successfully removed');
+      expect(result.stdout).toContain('成功移除了');
       expect(existsSync(join(skillsDir, 'skill-with-dashes'))).toBe(false);
       expect(existsSync(join(skillsDir, 'skill_with_underscores'))).toBe(true);
     });
@@ -244,8 +243,8 @@ This is a test skill.
       createTestSkill('last-skill');
 
       const result = runCli(['remove', 'last-skill', '-y'], testDir);
-      expect(result.stdout).toContain('Successfully removed');
-      expect(result.stdout).toContain('1 skill');
+      expect(result.stdout).toContain('成功移除了');
+      expect(result.stdout).toContain('1 个技能');
 
       // Directory should be empty or removed
       const remaining = readdirSync(skillsDir);
@@ -261,7 +260,7 @@ This is a test skill.
       createTestSkill('valid-skill');
 
       const result = runCli(['remove', 'valid-skill', '-y'], testDir);
-      expect(result.stdout).toContain('Successfully removed');
+      expect(result.stdout).toContain('成功移除了');
 
       // Invalid directory should still be removed
       expect(existsSync(join(skillsDir, 'invalid-skill'))).toBe(true);
@@ -271,7 +270,7 @@ This is a test skill.
   describe('help and info', () => {
     it('should show help with --help', () => {
       const result = runCli(['remove', '--help'], testDir);
-      expect(result.stdout).toContain('Usage');
+      expect(result.stdout).toContain('用法');
       expect(result.stdout).toContain('remove');
       expect(result.stdout).toContain('--global');
       expect(result.stdout).toContain('--agent');
@@ -281,7 +280,7 @@ This is a test skill.
 
     it('should show help with -h', () => {
       const result = runCli(['remove', '-h'], testDir);
-      expect(result.stdout).toContain('Usage');
+      expect(result.stdout).toContain('用法');
       expect(result.exitCode).toBe(0);
     });
   });

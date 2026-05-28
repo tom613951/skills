@@ -63,150 +63,150 @@ function showLogo(): void {
 function showBanner(): void {
   showLogo();
   console.log();
-  console.log(`${DIM}The open agent skills ecosystem${RESET}`);
+  console.log(`${DIM}开放式 Agent 技能生态系统${RESET}`);
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills add ${DIM}<package>${RESET}        ${DIM}Add a new skill${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx skills add ${DIM}<package>${RESET}        ${DIM}添加新技能${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills remove${RESET}               ${DIM}Remove installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx skills remove${RESET}               ${DIM}移除已安装的技能${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills list${RESET}                 ${DIM}List installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx skills list${RESET}                 ${DIM}列出已安装的技能${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills find ${DIM}[query]${RESET}         ${DIM}Search for skills${RESET}`
-  );
-  console.log();
-  console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills update${RESET}               ${DIM}Update installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx skills find ${DIM}[query]${RESET}         ${DIM}搜索技能${RESET}`
   );
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills experimental_install${RESET} ${DIM}Restore from skills-lock.json${RESET}`
-  );
-  console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills init ${DIM}[name]${RESET}          ${DIM}Create a new skill${RESET}`
-  );
-  console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills experimental_sync${RESET}    ${DIM}Sync skills from node_modules${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx skills update${RESET}               ${DIM}更新已安装的技能${RESET}`
   );
   console.log();
-  console.log(`${DIM}try:${RESET} npx skills add vercel-labs/agent-skills`);
+  console.log(
+    `  ${DIM}$${RESET} ${TEXT}npx skills experimental_install${RESET} ${DIM}从 skills-lock.json 恢复技能${RESET}`
+  );
+  console.log(
+    `  ${DIM}$${RESET} ${TEXT}npx skills init ${DIM}[name]${RESET}          ${DIM}新建技能${RESET}`
+  );
+  console.log(
+    `  ${DIM}$${RESET} ${TEXT}npx skills experimental_sync${RESET}    ${DIM}从 node_modules 同步技能${RESET}`
+  );
   console.log();
-  console.log(`Discover more skills at ${TEXT}https://skills.sh/${RESET}`);
+  console.log(`${DIM}尝试：${RESET} npx skills add vercel-labs/agent-skills`);
+  console.log();
+  console.log(`发现更多技能请访问 ${TEXT}https://skills.sh/${RESET}`);
   console.log();
 }
 
 function showHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} skills <command> [options]
+${BOLD}用法：${RESET} skills <command> [options]
 
-${BOLD}Manage Skills:${RESET}
-  add <package>        Add a skill package (alias: a)
-                       e.g. vercel-labs/agent-skills
+${BOLD}管理技能：${RESET}
+  add <package>        添加技能包 (别名: a)
+                       例如 vercel-labs/agent-skills
                             https://github.com/vercel-labs/agent-skills
-  remove [skills]      Remove installed skills
-  list, ls             List installed skills
-  find [query]         Search for skills interactively
+  remove [skills]      移除已安装的技能 (别名: rm)
+  list, ls             列出已安装的技能
+  find [query]         交互式搜索技能 (别名: f)
 
-${BOLD}Updates:${RESET}
-  update [skills...]   Update skills to latest versions (alias: upgrade)
+${BOLD}更新：${RESET}
+  update [skills...]   更新技能到最新版本 (别名: upgrade, check)
 
-${BOLD}Update Options:${RESET}
-  -g, --global           Update global skills only
-  -p, --project          Update project skills only
-  -y, --yes              Skip scope prompt (auto-detect: project if in a project, else global)
+${BOLD}更新选项：${RESET}
+  -g, --global           仅更新全局技能
+  -p, --project          仅更新项目级技能
+  -y, --yes              跳过范围提示 (自动检测: 如果在项目目录中则为项目级，否则为全局)
 
-${BOLD}Project:${RESET}
-  experimental_install Restore skills from skills-lock.json
-  init [name]          Initialize a skill (creates <name>/SKILL.md or ./SKILL.md)
-  experimental_sync    Sync skills from node_modules into agent directories
+${BOLD}项目命令：${RESET}
+  experimental_install 从 skills-lock.json 恢复技能
+  init [name]          初始化新技能 (创建 <name>/SKILL.md 或 ./SKILL.md)
+  experimental_sync    从 node_modules 同步技能到 Agent 目录
 
-${BOLD}Add Options:${RESET}
-  -g, --global           Install skill globally (user-level) instead of project-level
-  -a, --agent <agents>   Specify agents to install to (use '*' for all agents)
-  -s, --skill <skills>   Specify skill names to install (use '*' for all skills)
-  -l, --list             List available skills in the repository without installing
-  -y, --yes              Skip confirmation prompts
-  --copy                 Copy files instead of symlinking to agent directories
-  --all                  Shorthand for --skill '*' --agent '*' -y
-  --full-depth           Search all subdirectories even when a root SKILL.md exists
+${BOLD}添加选项：${RESET}
+  -g, --global           全局 (用户级) 安装技能，而不是项目级
+  -a, --agent <agents>   指定安装的目标 Agent (使用 '*' 表示所有 Agent)
+  -s, --skill <skills>   指定安装的特定技能名称 (使用 '*' 表示所有技能)
+  -l, --list             仅列出仓库中可用的技能而不进行安装
+  -y, --yes              跳过所有确认提示
+  --copy                 将文件复制到 Agent 目录，而不是建立软链接
+  --all                  --skill '*' --agent '*' -y 的简写
+  --full-depth           即使根目录存在 SKILL.md 也搜索所有子目录
 
-${BOLD}Remove Options:${RESET}
-  -g, --global           Remove from global scope
-  -a, --agent <agents>   Remove from specific agents (use '*' for all agents)
-  -s, --skill <skills>   Specify skills to remove (use '*' for all skills)
-  -y, --yes              Skip confirmation prompts
-  --all                  Shorthand for --skill '*' --agent '*' -y
+${BOLD}移除选项：${RESET}
+  -g, --global           从全局范围移除
+  -a, --agent <agents>   从特定 Agent 中移除 (使用 '*' 表示所有 Agent)
+  -s, --skill <skills>   指定要移除的技能 (使用 '*' 表示所有技能)
+  -y, --yes              跳过确认提示
+  --all                  --skill '*' --agent '*' -y 的简写
   
-${BOLD}Experimental Sync Options:${RESET}
-  -a, --agent <agents>   Specify agents to install to (use '*' for all agents)
-  -y, --yes              Skip confirmation prompts
+${BOLD}同步选项 (实验性)：${RESET}
+  -a, --agent <agents>   指定安装的目标 Agent (使用 '*' 表示所有 Agent)
+  -y, --yes              跳过确认提示
 
-${BOLD}List Options:${RESET}
-  -g, --global           List global skills (default: project)
-  -a, --agent <agents>   Filter by specific agents
-  --json                 Output as JSON (machine-readable, no ANSI codes)
+${BOLD}列表选项：${RESET}
+  -g, --global           列出全局技能 (默认: 项目级)
+  -a, --agent <agents>   按特定 Agent 进行筛选
+  --json                 输出为 JSON 格式 (机器可读，无 ANSI 颜色)
 
-${BOLD}Options:${RESET}
-  --help, -h        Show this help message
-  --version, -v     Show version number
+${BOLD}全局选项：${RESET}
+  --help, -h        显示此帮助信息
+  --version, -v     显示版本号
 
-${BOLD}Examples:${RESET}
+${BOLD}示例：${RESET}
   ${DIM}$${RESET} skills add vercel-labs/agent-skills
   ${DIM}$${RESET} skills add vercel-labs/agent-skills -g
   ${DIM}$${RESET} skills add vercel-labs/agent-skills --agent claude-code cursor
   ${DIM}$${RESET} skills add vercel-labs/agent-skills --skill pr-review commit
-  ${DIM}$${RESET} skills remove                        ${DIM}# interactive remove${RESET}
-  ${DIM}$${RESET} skills remove web-design             ${DIM}# remove by name${RESET}
+  ${DIM}$${RESET} skills remove                        ${DIM}# 交互式移除${RESET}
+  ${DIM}$${RESET} skills remove web-design             ${DIM}# 按名称移除${RESET}
   ${DIM}$${RESET} skills rm --global frontend-design
-  ${DIM}$${RESET} skills list                          ${DIM}# list project skills${RESET}
-  ${DIM}$${RESET} skills ls -g                         ${DIM}# list global skills${RESET}
-  ${DIM}$${RESET} skills ls -a claude-code             ${DIM}# filter by agent${RESET}
-  ${DIM}$${RESET} skills ls --json                      ${DIM}# JSON output${RESET}
-  ${DIM}$${RESET} skills find                          ${DIM}# interactive search${RESET}
-  ${DIM}$${RESET} skills find typescript               ${DIM}# search by keyword${RESET}
+  ${DIM}$${RESET} skills list                          ${DIM}# 列出项目级技能${RESET}
+  ${DIM}$${RESET} skills ls -g                         ${DIM}# 列出全局技能${RESET}
+  ${DIM}$${RESET} skills ls -a claude-code             ${DIM}# 按 Agent 筛选${RESET}
+  ${DIM}$${RESET} skills ls --json                      ${DIM}# 输出为 JSON${RESET}
+  ${DIM}$${RESET} skills find                          ${DIM}# 交互式搜索${RESET}
+  ${DIM}$${RESET} skills find typescript               ${DIM}# 按关键字搜索${RESET}
   ${DIM}$${RESET} skills update
-  ${DIM}$${RESET} skills update my-skill             ${DIM}# update a single skill${RESET}
-  ${DIM}$${RESET} skills update -g                    ${DIM}# update global skills only${RESET}
-  ${DIM}$${RESET} skills experimental_install            ${DIM}# restore from skills-lock.json${RESET}
+  ${DIM}$${RESET} skills update my-skill             ${DIM}# 更新单个技能${RESET}
+  ${DIM}$${RESET} skills update -g                    ${DIM}# 仅更新全局技能${RESET}
+  ${DIM}$${RESET} skills experimental_install            ${DIM}# 从 lock 恢复${RESET}
   ${DIM}$${RESET} skills init my-skill
-  ${DIM}$${RESET} skills experimental_sync              ${DIM}# sync from node_modules${RESET}
-  ${DIM}$${RESET} skills experimental_sync -y           ${DIM}# sync without prompts${RESET}
+  ${DIM}$${RESET} skills experimental_sync              ${DIM}# 从 node_modules 同步${RESET}
+  ${DIM}$${RESET} skills experimental_sync -y           ${DIM}# 同步且不进行提示${RESET}
 
-Discover more skills at ${TEXT}https://skills.sh/${RESET}
+发现更多技能请访问 ${TEXT}https://skills.sh/${RESET}
 `);
 }
 
 function showRemoveHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} skills remove [skills...] [options]
+${BOLD}用法：${RESET} skills remove [skills...] [options]
 
-${BOLD}Description:${RESET}
-  Remove installed skills from agents. If no skill names are provided,
-  an interactive selection menu will be shown.
+${BOLD}描述：${RESET}
+  从 Agent 中移除已安装的技能。如果未提供技能名称，
+  则会显示交互式选择菜单。
 
-${BOLD}Arguments:${RESET}
-  skills            Optional skill names to remove (space-separated)
+${BOLD}参数：${RESET}
+  skills            可选。要移除的技能名称 (空格分隔)
 
-${BOLD}Options:${RESET}
-  -g, --global       Remove from global scope (~/) instead of project scope
-  -a, --agent        Remove from specific agents (use '*' for all agents)
-  -s, --skill        Specify skills to remove (use '*' for all skills)
-  -y, --yes          Skip confirmation prompts
-  --all              Shorthand for --skill '*' --agent '*' -y
+${BOLD}选项：${RESET}
+  -g, --global       从全局范围 (~/) 移除，而不是项目范围
+  -a, --agent        从特定 Agent 移除 (使用 '*' 表示所有 Agent)
+  -s, --skill        指定要移除的技能 (使用 '*' 表示所有技能)
+  -y, --yes          跳过确认提示
+  --all              --skill '*' --agent '*' -y 的简写
 
-${BOLD}Examples:${RESET}
-  ${DIM}$${RESET} skills remove                           ${DIM}# interactive selection${RESET}
-  ${DIM}$${RESET} skills remove my-skill                   ${DIM}# remove specific skill${RESET}
-  ${DIM}$${RESET} skills remove skill1 skill2 -y           ${DIM}# remove multiple skills${RESET}
-  ${DIM}$${RESET} skills remove --global my-skill          ${DIM}# remove from global scope${RESET}
-  ${DIM}$${RESET} skills rm --agent claude-code my-skill   ${DIM}# remove from specific agent${RESET}
-  ${DIM}$${RESET} skills remove --all                      ${DIM}# remove all skills${RESET}
-  ${DIM}$${RESET} skills remove --skill '*' -a cursor      ${DIM}# remove all skills from cursor${RESET}
+${BOLD}示例：${RESET}
+  ${DIM}$${RESET} skills remove                           ${DIM}# 交互式选择移除${RESET}
+  ${DIM}$${RESET} skills remove my-skill                   ${DIM}# 移除特定技能${RESET}
+  ${DIM}$${RESET} skills remove skill1 skill2 -y           ${DIM}# 移除多个技能${RESET}
+  ${DIM}$${RESET} skills remove --global my-skill          ${DIM}# 从全局范围移除${RESET}
+  ${DIM}$${RESET} skills rm --agent claude-code my-skill   ${DIM}# 从特定 Agent 移除${RESET}
+  ${DIM}$${RESET} skills remove --all                      ${DIM}# 移除所有技能${RESET}
+  ${DIM}$${RESET} skills remove --skill '*' -a cursor      ${DIM}# 移除 cursor 中的所有技能${RESET}
 
-Discover more skills at ${TEXT}https://skills.sh/${RESET}
+发现更多技能请访问 ${TEXT}https://skills.sh/${RESET}
 `);
 }
 
@@ -220,7 +220,7 @@ function runInit(args: string[]): void {
   const displayPath = hasName ? `${skillName}/SKILL.md` : 'SKILL.md';
 
   if (existsSync(skillFile)) {
-    console.log(`${TEXT}Skill already exists at ${DIM}${displayPath}${RESET}`);
+    console.log(`${TEXT}技能已存在于 ${DIM}${displayPath}${RESET}`);
     return;
   }
 
@@ -230,46 +230,44 @@ function runInit(args: string[]): void {
 
   const skillContent = `---
 name: ${skillName}
-description: A brief description of what this skill does
+description: 简要描述该技能的作用
 ---
 
 # ${skillName}
 
-Instructions for the agent to follow when this skill is activated.
+激活此技能时让 Agent 遵循的指令。
 
-## When to use
+## 何时使用
 
-Describe when this skill should be used.
+描述何时应该使用此技能。
 
-## Instructions
+## 指令
 
-1. First step
-2. Second step
-3. Additional steps as needed
+1. 第一步
+2. 第二步
+3. 视需要添加更多步骤
 `;
 
   writeFileSync(skillFile, skillContent);
 
-  console.log(`${TEXT}Initialized skill: ${DIM}${skillName}${RESET}`);
+  console.log(`${TEXT}初始化技能：${DIM}${skillName}${RESET}`);
   console.log();
-  console.log(`${DIM}Created:${RESET}`);
+  console.log(`${DIM}已创建：${RESET}`);
   console.log(`  ${displayPath}`);
   console.log();
-  console.log(`${DIM}Next steps:${RESET}`);
-  console.log(`  1. Edit ${TEXT}${displayPath}${RESET} to define your skill instructions`);
+  console.log(`${DIM}后续步骤：${RESET}`);
+  console.log(`  1. 编辑 ${TEXT}${displayPath}${RESET} 来定义技能指令`);
+  console.log(`  2. 更新前言 (frontmatter) 中的 ${TEXT}name${RESET} 和 ${TEXT}description${RESET}`);
+  console.log();
+  console.log(`${DIM}发布方法：${RESET}`);
   console.log(
-    `  2. Update the ${TEXT}name${RESET} and ${TEXT}description${RESET} in the frontmatter`
+    `  ${DIM}GitHub:${RESET}  推送到仓库，然后执行 ${TEXT}npx skills add <所有者>/<仓库>${RESET}`
+  );
+  console.log(
+    `  ${DIM}URL:${RESET}     托管该文件，然后执行 ${TEXT}npx skills add https://example.com/${displayPath}${RESET}`
   );
   console.log();
-  console.log(`${DIM}Publishing:${RESET}`);
-  console.log(
-    `  ${DIM}GitHub:${RESET}  Push to a repo, then ${TEXT}npx skills add <owner>/<repo>${RESET}`
-  );
-  console.log(
-    `  ${DIM}URL:${RESET}     Host the file, then ${TEXT}npx skills add https://example.com/${displayPath}${RESET}`
-  );
-  console.log();
-  console.log(`Browse existing skills for inspiration at ${TEXT}https://skills.sh/${RESET}`);
+  console.log(`访问 ${TEXT}https://skills.sh/${RESET} 浏览现有技能以获取灵感`);
   console.log();
 }
 
@@ -355,8 +353,8 @@ async function main(): Promise<void> {
       break;
 
     default:
-      console.log(`Unknown command: ${command}`);
-      console.log(`Run ${BOLD}skills --help${RESET} for usage.`);
+      console.log(`未知命令：${command}`);
+      console.log(`运行 ${BOLD}skills --help${RESET} 查看用法。`);
   }
 }
 
